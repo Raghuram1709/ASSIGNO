@@ -1,0 +1,195 @@
+.member-tabs,
+.lead-panel-tabs {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-primary);
+    align-items: center;
+    padding-bottom: 1rem;
+
+}
+
+.panel-header h3 {
+    font-size: 2rem;
+}
+
+.panel-header span {
+    font-size: 1.2rem;
+}
+
+.history-filters {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.submission-container,
+.review-container,
+.communication-panel {
+    margin-top: 2rem;
+    background: var(--glass-bg);
+    border: 3px double var(--text-primary);
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.communication-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.submission-container h2,
+.review-container h3 {
+    font-size: 2rem;
+}
+
+.submission-history-card,
+.review-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 1rem;
+    background: var(--text-primary);
+    color: var(--btn-text);
+    border: 3px double var(--btn-text);
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.pagination span {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.pagination .submission-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.submission-details,
+.review-details {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 1rem;
+    border: 3px double var(--btn-text);
+    padding: 0.9rem;
+    background: var(--text-primary);
+    color: var(--btn-text);
+    border-radius: 8px;
+}
+
+.approve-confirm-card,
+.reject-reason-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: var(--btn-text);
+    border: 2px dotted var(--text-primary);
+    border-radius: 8px;
+    align-self: center;
+    padding: 1rem 2rem;
+    width: 100%;
+
+}
+
+.approve-confirm-card h4,
+.approve-confirm-card p,
+.reject-reason-card h4 {
+    color: var(--text-primary);
+}
+
+.approve-handle,
+.reject-handle {
+    display: flex;
+    justify-content: space-around;
+}
+
+.approve-action-handle {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    width: 100%;
+}
+
+.approve-action-handle button {
+    width: 100px;
+}
+
+.reject-reason-card h4 {
+    font-size: 1.5rem;
+}
+
+.reject-reason-card textarea,
+.response textarea {
+    color: var(--text-primary);
+    font-size: 1rem;
+    background: none;
+    border: 2px solid var(--text-primary);
+    border-radius: 8px;
+    padding: 10px;
+    width: 100%;
+    min-height: 70px;
+    resize: vertical;
+}
+
+.communication-panel h3 {
+    font-size: 1.5rem;
+}
+
+.communication-scope {
+    display: flex;
+    padding: 1rem 0;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.communication-input {
+    display: flex;
+    gap: 10px;
+}
+
+.communication-input label {
+    font-size: 1.2rem;
+}
+
+.communication-input input[type="radio"] {
+    transform: scale(1.2);
+    accent-color: var(--text-primary);
+}
+
+.response {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#no-pending {
+    margin: 1rem 0;
+    justify-self: center;
+    padding: 1rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    font-size: 1.2rem;
+}

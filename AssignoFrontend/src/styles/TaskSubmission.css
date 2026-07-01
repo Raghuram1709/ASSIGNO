@@ -1,0 +1,467 @@
+.task-submission {
+
+display: flex;
+
+flex-direction: column;
+
+gap: 1.2rem;
+
+width: min(800px, 92vw);
+
+max-height: 90vh;
+
+overflow-y: auto;
+
+position: relative;
+
+padding: 2rem;
+
+border-radius: 8px;
+
+border: 1px solid var(--text-primary);
+
+box-shadow: var(--shadow-primary);
+
+background: var(--glass-bg);
+
+backdrop-filter: blur();
+
+z-index: 1000;
+}
+
+.task-submission-title {
+
+margin: 0;
+
+color: var(--text-primary);
+
+font-size: 1.8rem;
+
+font-weight: 700;
+}
+
+.task-form {
+
+display: flex;
+
+flex-direction: column;
+
+gap: 1.25rem;
+}
+
+.form-group {
+
+display: flex;
+
+flex-direction: column;
+
+gap: 0.5rem;
+}
+
+.form-group label {
+
+color: var(--text-primary);
+
+font-weight: 600;
+}
+
+/* INPUTS */
+
+.form-group textarea,
+.form-group input[type="url"],
+.task-search {
+
+padding: 0.85rem;
+
+border-radius: 10px;
+
+border: 1px solid var(--border-color);
+
+background: var(--glass-bg);
+
+color: var(--text-primary);
+
+resize: vertical;
+}
+
+.form-group textarea:focus,
+.form-group input[type="url"]:focus,
+.task-search:focus {
+
+outline: none;
+
+border-color: var(--copper);
+
+box-shadow:
+0 0 8px
+rgba(182,90,27,0.3);
+}
+
+.form-group textarea::placeholder,
+.form-group input::placeholder {
+
+color: var(--text-muted);
+}
+
+/* TASK DROPDOWN */
+
+.task-dropdown {
+
+position: relative;
+}
+
+.task-dropdown-header {
+
+padding: 0.85rem;
+
+border-radius: 10px;
+
+border: 1px solid var(--border-color);
+
+background: var(--glass-bg);
+
+color: var(--text-primary);
+
+cursor: pointer;
+
+font-weight: 500;
+}
+
+.task-dropdown-menu {
+
+position: absolute;
+
+top: calc(100% + 8px);
+
+left: 0;
+
+width: 100%;
+
+background: var(--bg-card);
+
+border: 1px solid var(--border-color);
+
+border-radius: 12px;
+
+overflow: hidden;
+
+z-index: 100;
+}
+
+.tasks-list {
+
+max-height: 220px;
+
+overflow-y: auto;
+}
+
+.task-option {
+
+padding: 0.9rem;
+
+cursor: pointer;
+
+color: var(--text-primary);
+
+border-bottom:
+1px solid
+var(--border-color);
+
+transition: 0.25s ease;
+}
+
+.task-option:hover {
+
+background:
+rgba(182,90,27,0.12);
+}
+
+.task-option.selected {
+
+background:
+var(--gradient-rust);
+
+color: white;
+
+font-weight: 600;
+}
+
+.no-task {
+
+padding: 1rem;
+
+text-align: center;
+
+color: var(--text-muted);
+}
+
+/* LINKS */
+
+.links-header {
+
+display: flex;
+
+justify-content: space-between;
+
+align-items: center;
+
+gap: 1rem;
+}
+
+.link-row {
+
+display: flex;
+
+gap: 0.75rem;
+}
+
+.link-row input {
+
+flex: 1;
+}
+
+/* BUTTONS */
+
+.browse-btn,
+.add-link-btn,
+.submit-btn,
+.remove-btn {
+
+border: none;
+
+cursor: pointer;
+
+border-radius: 10px;
+
+font-weight: 600;
+
+transition: 0.25s ease;
+}
+
+.browse-btn,
+.add-link-btn {
+
+padding: 0.8rem 1rem;
+
+background: var(--btns);
+
+color: var(--btn-text);
+}
+
+.submit-btn {
+
+padding: 1rem;
+
+background: var(--btns);
+
+color: var(--btn-text);
+}
+
+.submit-btn:hover,
+.add-link-btn:hover,
+.browse-btn:hover {
+
+transform: translateY(-2px);
+}
+
+.remove-btn {
+
+background: var(--rust);
+
+color: white;
+
+padding: 0.7rem 1rem;
+}
+
+/* FILE DROP */
+
+.hidden-input {
+
+display: none;
+}
+
+.drop-zone {
+
+padding: 2rem;
+
+text-align: center;
+
+border-radius: 12px;
+
+border: 2px dashed
+var(--border-color);
+
+background: var(--glass-bg);
+
+transition: 0.3s ease;
+}
+
+.drop-zone.dragging {
+
+border-color: var(--copper);
+
+background:
+rgba(182,90,27,0.1);
+}
+
+.drop-zone p {
+
+color: var(--text-secondary);
+}
+
+/* FILES */
+
+.files-list {
+
+display: flex;
+
+flex-direction: column;
+
+gap: 0.75rem;
+}
+
+.file-item {
+
+display: flex;
+
+justify-content: space-between;
+
+align-items: center;
+
+gap: 1rem;
+
+padding: 0.85rem;
+
+border-radius: 12px;
+
+border: 1px solid var(--border-color);
+
+background: var(--glass-bg);
+}
+
+.file-info {
+
+display: flex;
+
+align-items: center;
+
+gap: 1rem;
+}
+
+.file-preview {
+
+width: 60px;
+
+height: 60px;
+
+object-fit: cover;
+
+border-radius: 8px;
+}
+
+/* CLOSE BUTTON */
+
+.close-btn {
+
+position: absolute;
+
+top: 1rem;
+
+right: 1rem;
+}
+
+.close-btn button {
+
+background: transparent;
+
+border: none;
+
+color: var(--text-primary);
+
+cursor: pointer;
+}
+
+.close-btn button:hover {
+
+transform: scale(1.1);
+}
+
+/* TABLET */
+
+@media (max-width: 768px) {
+
+.task-submission {
+
+
+  width: 95vw;
+
+  padding: 1.5rem;
+
+
+}
+
+.links-header {
+
+
+  flex-direction: column;
+
+  align-items: stretch;
+
+
+}
+
+.link-row {
+
+
+  flex-direction: column;
+
+
+}
+
+.tasks-list {
+
+
+  max-height: 180px;
+
+
+}
+
+/* MOBILE */
+
+@media (max-width: 480px) {
+
+.task-submission {
+
+
+  padding: 1rem;
+
+
+}
+
+.task-submission-title {
+
+
+  font-size: 1.4rem;
+
+
+}
+
+.file-item {
+
+
+  flex-direction: column;
+
+  align-items: flex-start;
+
+
+}
+
+.remove-btn,
+.submit-btn,
+.browse-btn,
+.add-link-btn {
+    width: 100%;
+
+
+}
+}}

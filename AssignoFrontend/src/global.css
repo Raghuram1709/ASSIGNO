@@ -1,0 +1,299 @@
+html,
+body,
+#root {
+
+  min-height: 100vh;
+  width: 100%;
+
+}
+
+
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+
+  background:
+    rgba(255, 255, 255, 0.03);
+
+  backdrop-filter:
+    blur(10px);
+
+  border-radius: 999px;
+
+}
+
+::-webkit-scrollbar-thumb {
+
+  background: var(--text-primary);
+
+
+  border-radius: 999px;
+
+  box-shadow:
+    0 0 8px rgba(166, 59, 18, 0.25);
+
+  transition:
+    all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+
+  background:
+    linear-gradient(180deg,
+      var(--rust),
+      var(--pine));
+
+  box-shadow:
+    0 0 16px rgba(166, 59, 18, 0.4),
+    0 0 24px rgba(0, 49, 31, 0.2);
+
+  width: 12px;
+}
+
+
+
+/* ----------------------------------
+   LIGHT THEME
+--------------------------------------*/
+
+:root {
+
+  /* MAIN COLORS */
+  --milk: #ECE5E7;
+  --pine: #00311F;
+  --rust: #A63B12;
+  --copper: #B65A1B;
+
+  /* BACKGROUNDS */
+  --bg-primary: var(--milk);
+  --bg-secondary: #F6F1F2;
+  --bg-card: #FFFFFF;
+
+  /* TEXT */
+  --text-primary: var(--pine);
+  --text-secondary: #315347;
+  --text-muted: #6F7D77;
+
+  /* BORDER */
+  --border-color: rgba(0, 49, 31, 0.12);
+
+  /* ACCENTS */
+  --accent-primary: var(--pine);
+  --accent-secondary: var(--rust);
+  --accent-tertiary: var(--copper);
+
+  /* GRADIENTS */
+  --gradient-primary:
+    linear-gradient(135deg,
+      #00311F 0%,
+      #0B4B35 100%);
+
+  --gradient-rust:
+    linear-gradient(135deg,
+      #8E2D0D 0%,
+      #B65A1B 100%);
+
+  --gradient-hero:
+    linear-gradient(135deg,
+      #ECE5E7 0%,
+      #d8e4df 40%,
+      #00311F 100%);
+
+  /* SHADOWS */
+
+  /* Small cards, buttons */
+  --shadow-soft:
+    0 1px 2px rgba(0, 49, 31, 0.05),
+    0 6px 12px rgba(0, 49, 31, 0.06),
+    0 0 0 1px rgba(0, 49, 31, 0.05);
+
+  /* Main elevation */
+  --shadow-primary:
+    0 2px 4px rgba(0, 49, 31, 0.06),
+    0 12px 28px rgba(0, 49, 31, 0.08),
+    0 20px 40px rgba(166, 59, 18, 0.06),
+    0 0 0 1px rgba(255, 255, 255, 0.45);
+
+  /* Inner depth */
+  --inner-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -2px 8px rgba(0, 49, 31, 0.08),
+    inset 0 0 1px rgba(166, 59, 18, 0.08);
+
+  /* Premium glass */
+  --shadow-combined:
+    var(--shadow-primary),
+    var(--inner-shadow);
+  /* GLASS */
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.18);
+
+  color-scheme: light;
+
+
+  --bg-glow-rust:
+    rgba(166, 59, 18, 0.12);
+
+  --bg-glow-pine:
+    rgba(0, 49, 31, 0.18);
+
+  --btns: var(--copper);
+  --btn-text: var(--milk);
+  --text: var(--milk);
+
+  /* Interactive Components (Light) */
+  --glare-color: rgba(0, 49, 31, 0.05);
+  --status-approved-bg: rgba(40, 200, 64, 0.15);
+  --status-approved-text: #1a7a2a;
+  --status-pending-bg: rgba(255, 200, 50, 0.2);
+  --status-pending-text: #b07d00;
+  --status-rejected-bg: rgba(220, 80, 60, 0.15);
+  --status-rejected-text: #c03020;
+}
+
+
+
+/* -------------------
+    DARK THEME
+----------------------*/
+
+
+.dark {
+
+  /* MAIN COLORS */
+  --milk: #ECE5E7;
+  --pine: #00311F;
+  --rust: #A63B12;
+  --copper: #B65A1B;
+
+  /* BACKGROUNDS */
+  --bg-primary: #000000;
+  --bg-secondary: #041D15;
+  --bg-card: #08261C;
+
+  /* TEXT */
+  --text-primary: #ECE5E7;
+  --text-secondary: #BFD0C8;
+  --text-muted: #7F9990;
+
+  /* BORDER */
+  --border-color: rgba(255, 255, 255, 0.08);
+
+  /* ACCENTS */
+  --accent-primary: #0D5B42;
+  --accent-secondary: var(--rust);
+  --accent-tertiary: var(--copper);
+
+  /* GRADIENTS */
+  --gradient-primary:
+    linear-gradient(135deg,
+      #000000 0%,
+      #00150D 30%,
+      #00311F 100%);
+
+  --gradient-rust:
+    linear-gradient(135deg,
+      #632108 0%,
+      #A63B12 100%);
+
+  --gradient-hero:
+    linear-gradient(135deg,
+      #000000 0%,
+      #00150D 20%,
+      #00311F 70%,
+      #0F5B43 100%);
+
+  /* SHADOWS */
+
+  /* Small elevation */
+  --shadow-soft:
+    0 2px 4px rgba(0, 0, 0, 0.25),
+    0 10px 20px rgba(0, 0, 0, 0.32),
+    0 0 0 1px rgba(255, 255, 255, 0.03);
+
+  /* Floating panels */
+  --shadow-primary:
+    0 4px 8px rgba(0, 0, 0, 0.45),
+    0 20px 40px rgba(0, 0, 0, 0.50),
+    0 0 40px rgba(15, 91, 67, 0.14),
+    0 0 12px rgba(166, 59, 18, 0.08);
+
+  /* Recessed depth */
+  --inner-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    inset 0 -10px 18px rgba(0, 0, 0, 0.45),
+    inset 0 0 18px rgba(0, 49, 31, 0.18);
+
+  /* Premium glass */
+  --shadow-combined:
+    var(--shadow-primary),
+    var(--inner-shadow);
+
+  /* GLASS */
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.06);
+
+  color-scheme: dark;
+
+  --bg-glow-rust:
+    rgba(166, 59, 18, 0.18);
+
+  --bg-glow-pine:
+    rgba(15, 91, 67, 0.22);
+
+
+  background-attachment: fixed;
+
+  --bottom-border: var(--copper);
+  --btns: var(--milk);
+  --btn-text: var(--pine);
+
+  /* Interactive Components (Dark) */
+  --glare-color: rgba(255, 255, 255, 0.08);
+  --status-approved-bg: rgba(40, 200, 64, 0.15);
+  --status-approved-text: #60e090;
+  --status-pending-bg: rgba(255, 200, 50, 0.2);
+  --status-pending-text: #ffd060;
+  --status-rejected-bg: rgba(220, 80, 60, 0.2);
+  --status-rejected-text: #ff9080;
+}
+
+* {
+
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+
+}
+
+body {
+
+  margin: 0;
+
+  background:
+    radial-gradient(circle at top left,
+      var(--bg-glow-rust),
+      transparent 25%),
+
+    radial-gradient(circle at bottom right,
+      var(--bg-glow-pine),
+      transparent 30%),
+
+    var(--gradient-hero);
+
+  background-repeat: no-repeat;
+
+  background-attachment: fixed;
+
+  color: var(--text-primary);
+
+  font-family: "Inter", sans-serif;
+
+  overflow-x: hidden;
+
+}

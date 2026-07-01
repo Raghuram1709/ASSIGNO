@@ -1,0 +1,169 @@
+.notifications-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 24px 100px;
+  min-height: calc(100vh - 72px);
+}
+
+.notifications-page h1 {
+  font-family: 'Sora', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+}
+
+.notification-filters {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 8px;
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-soft);
+}
+
+.filter-group {
+  display: flex;
+  gap: 8px;
+}
+
+.filter-btn {
+  background: transparent;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.filter-btn.active {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.mark-read-btn {
+  background: transparent;
+  border: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-primary);
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.mark-read-btn:hover {
+  background: rgba(40, 200, 64, 0.1);
+}
+
+.notification-date-group {
+  margin-bottom: 32px;
+}
+
+.date-group-header {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  position: sticky;
+  top: 72px; 
+  background: var(--bg-primary); 
+  border-radius: 8px;
+  box-shadow: var(--shadow-soft);
+  z-index: 10;
+}
+
+/* Card Styling for NotificationCard */
+.notification-item-wrapper {
+  margin-bottom: 12px;
+}
+
+.notification-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.notification-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-color);
+  box-shadow: var(--shadow-soft);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.notification-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.notification-card-header h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.notification-card p {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.notification-dot {
+  color: var(--accent-primary);
+  font-size: 14px;
+  animation: pulseDot 2s infinite;
+}
+
+.notification-card.unread {
+  border-left: 3px solid var(--accent-primary);
+  background: rgba(40, 200, 64, 0.02);
+}
+
+.no-notifications {
+  text-align: center;
+  padding: 60px 0;
+  color: var(--text-muted);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+}
+
+@keyframes pulseDot {
+  0% { opacity: 1; }
+  50% { opacity: 0.4; }
+  100% { opacity: 1; }
+}

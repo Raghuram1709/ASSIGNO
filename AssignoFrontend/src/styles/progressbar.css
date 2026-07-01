@@ -1,0 +1,118 @@
+.circular-progress-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circular-progress-container svg {
+  transform: rotate(-90deg);
+}
+
+.progress-bg {
+  stroke: #e5e7eb;
+}
+
+.progress-circle {
+  stroke: #4f46e5;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.6s ease;
+}
+
+.progress-text {
+  position: absolute;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #222;
+}
+
+
+
+.circular-progress-container {
+  position: relative;
+  width: clamp(90px, 20vw, 120px);
+  aspect-ratio: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.progress-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.progress-bg {
+  stroke: #f8f8f8;
+}
+
+.progress-circle {
+  stroke: green;
+  stroke-linecap:square;
+
+  transform: rotate(180deg) scaleX(-1);
+  transform-origin: center;
+
+  transition: stroke-dashoffset 0.1s linear;
+}
+
+.progress-text {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  font-size: clamp(1.5rem, 2vw, 2rem);
+  font-weight: bolder;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.circular-progress-container-member{
+  width: clamp(50px, 10vw, 100px);
+}
+
+.progress-bg-member {
+  stroke: #e5e7eb;
+}
+.progress-circle-member {
+  stroke: green;
+}
+
+.progress-text-member {
+  font-size: clamp(0.8rem, 1vw, 1.5rem);
+  font-weight: bolder;
+  color: var(--text-color);
+}
+
+
+.progress-bar-small {
+  width: 100px;
+  height: 10px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 2px solid var(--border-color);
+}
+
+.progress-fill-small {
+  height: 100%;
+  width: 0; 
+  background: green;
+  border-radius: inherit;
+  transition: width 0.4s ease;
+}
+
+.progress-bar-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.progress-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-color);
+}
