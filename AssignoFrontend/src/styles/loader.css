@@ -1,0 +1,180 @@
+/* Container for general block-level loading */
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 150px;
+  width: 100%;
+}
+
+/* Fullscreen loader overlay */
+.loader-fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(236, 229, 231, 0.7); /* Light Mode Background (--milk) with transparency */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: all 0.3s ease;
+}
+
+/* Dark mode fullscreen overlay */
+.dark .loader-fullscreen {
+  background: rgba(0, 0, 0, 0.75); /* Dark Mode Background with transparency */
+}
+
+/* Cosmic Orbit Spinner */
+.cosmic-orbit {
+  position: relative;
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+}
+
+.cosmic-orbit::before,
+.cosmic-orbit::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  border: 3.5px solid transparent;
+}
+
+.cosmic-orbit::before {
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-top-color: var(--rust);
+  border-bottom-color: var(--copper);
+  animation: orbit-spin-clockwise 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+  box-shadow: 0 0 20px rgba(166, 59, 18, 0.25);
+}
+
+.cosmic-orbit::after {
+  top: 8px; left: 8px; right: 8px; bottom: 8px;
+  border-left-color: var(--pine);
+  border-right-color: var(--text-secondary);
+  animation: orbit-spin-counter 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+  opacity: 0.85;
+}
+
+@keyframes orbit-spin-clockwise {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes orbit-spin-counter {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(-360deg); }
+}
+
+/* Conic Sweep Spinner */
+.conic-sweep {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  padding: 3px;
+  background: conic-gradient(from 0deg, transparent 20%, var(--rust), var(--copper), var(--pine));
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 4px), black calc(100% - 3px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 4px), black calc(100% - 3px));
+  animation: sweep-spin 0.85s linear infinite;
+}
+
+@keyframes sweep-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Liquid Morphing Orb Spinner */
+.liquid-orb {
+  display: inline-block;
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, var(--rust), var(--copper));
+  animation: liquid-morph 6s ease-in-out infinite, liquid-pulse-rotate 2s ease-in-out infinite alternate;
+  box-shadow: 0 0 25px rgba(166, 59, 18, 0.3);
+}
+
+.dark .liquid-orb {
+  background: linear-gradient(135deg, var(--rust), var(--pine));
+  box-shadow: 0 0 25px rgba(166, 59, 18, 0.45);
+}
+
+@keyframes liquid-morph {
+  0%, 100% {
+    border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+  }
+  25% {
+    border-radius: 70% 30% 52% 48% / 60% 40% 60% 40%;
+  }
+  50% {
+    border-radius: 30% 70% 30% 70% / 50% 60% 40% 50%;
+  }
+  75% {
+    border-radius: 65% 35% 65% 35% / 40% 60% 50% 60%;
+  }
+}
+
+@keyframes liquid-pulse-rotate {
+  0% {
+    transform: scale(0.9) rotate(0deg);
+  }
+  100% {
+    transform: scale(1.1) rotate(180deg);
+  }
+}
+
+/* Sizes styling overrides */
+.loader-size-small .cosmic-orbit {
+  width: 32px;
+  height: 32px;
+}
+.loader-size-small .cosmic-orbit::before {
+  border-width: 2px;
+}
+.loader-size-small .cosmic-orbit::after {
+  top: 4px; left: 4px; right: 4px; bottom: 4px;
+  border-width: 2px;
+}
+
+.loader-size-small .conic-sweep {
+  width: 24px;
+  height: 24px;
+  padding: 2px;
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2.5px), black calc(100% - 2px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 2.5px), black calc(100% - 2px));
+}
+
+.loader-size-small .liquid-orb {
+  width: 24px;
+  height: 24px;
+}
+
+.loader-size-large .cosmic-orbit {
+  width: 96px;
+  height: 96px;
+}
+.loader-size-large .cosmic-orbit::before {
+  border-width: 4.5px;
+}
+.loader-size-large .cosmic-orbit::after {
+  top: 12px; left: 12px; right: 12px; bottom: 12px;
+  border-width: 4.5px;
+}
+
+.loader-size-large .conic-sweep {
+  width: 72px;
+  height: 72px;
+  padding: 4.5px;
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 5.5px), black calc(100% - 5px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 5.5px), black calc(100% - 5px));
+}
+
+.loader-size-large .liquid-orb {
+  width: 80px;
+  height: 80px;
+}

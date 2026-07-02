@@ -1,21 +1,21 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useAppDispatch, useAppSelector } from '../app/reduxHooks';
 import { Navigate } from 'react-router-dom';
 import RegisterProject from '../components/RegisterProject';
 import { fetchProjects } from '../features/project/projectThunk';
 import ProjectCard from '../components/ProjectCard';
+import Loader from '../components/Loader';
 import '../styles/projects.css';
 import '../styles/animations.css';
 
 const Projects = () => {
    const [showModal, setShowModal] = useState(false);
-   const [selectedProject, setSelectedProject] = useState(null);
    const [searchQuery, setSearchQuery] = useState("");
 
    const dispatch = useAppDispatch();
 
    const { isAuthenticated, token, user } = useAppSelector((state) => state.auth);
-   const { projects } = useAppSelector((state) => state.project);
+   const { projects, loading } = useAppSelector((state) => state.project);
 
    useEffect(() => {
       if (token) {
@@ -95,38 +95,42 @@ const Projects = () => {
             <RegisterProject closeModal={() => setShowModal(false)} />
          )}
 
-         {leadProjects.length > 0 && (
-            <div className="project-role-section">
-               <h3 className="project-section-title">Projects You Lead</h3>
-               <div className='projects-container animated-list' key={`lead-${searchQuery}`}>
-                  {leadProjects.map((project) => (
-                     <ProjectCard 
-                        key={project.projectId} 
-                        project={project}
-                        onAddMember={() => setSelectedProject(project)}
-                     />
-                  ))}
-               </div>
-            </div>
-         )}
+         {loading && projects.length === 0 ? (
+            <Loader variant="orbit" size="large" />
+         ) : (
+            <>
+               {leadProjects.length > 0 && (
+                  <div className="project-role-section">
+                     <h3 className="project-section-title">Projects You Lead</h3>
+                     <div className='projects-container animated-list' key={`lead-${searchQuery}`}>
+                        {leadProjects.map((project) => (
+                           <ProjectCard 
+                              key={project.projectId} 
+                              project={project}
+                           />
+                        ))}
+                     </div>
+                  </div>
+               )}
 
-         {memberProjects.length > 0 && (
-            <div className="project-role-section">
-               <h3 className="project-section-title">Projects You Contribute To</h3>
-               <div className='projects-container animated-list' key={`member-${searchQuery}`}>
-                  {memberProjects.map((project) => (
-                     <ProjectCard 
-                        key={project.projectId} 
-                        project={project}
-                        onAddMember={() => setSelectedProject(project)}
-                     />
-                  ))}
-               </div>
-            </div>
-         )}
+               {memberProjects.length > 0 && (
+                  <div className="project-role-section">
+                     <h3 className="project-section-title">Projects You Contribute To</h3>
+                     <div className='projects-container animated-list' key={`member-${searchQuery}`}>
+                        {memberProjects.map((project) => (
+                           <ProjectCard 
+                              key={project.projectId} 
+                              project={project}
+                           />
+                        ))}
+                     </div>
+                  </div>
+               )}
 
-         {filteredProjects.length === 0 && (
-            <p style={{color: 'var(--text-muted)'}}>No projects found.</p>
+               {filteredProjects.length === 0 && (
+                  <p style={{color: 'var(--text-muted)'}}>No projects found.</p>
+               )}
+            </>
          )}
 
       </div>
