@@ -5,7 +5,7 @@ import Member
 from "../models/member.js";
 
 import AppError
-from "../utils/AppError.js";
+from "../utils/appError.js";
 
 import {
   createNotification,
