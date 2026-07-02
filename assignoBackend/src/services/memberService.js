@@ -1,6 +1,6 @@
-import User from "../models/User.js";
-import Member from "../models/Member.js";
-import AppError from "../utils/AppError.js";
+import User from "../models/user.js";
+import Member from "../models/member.js";
+import AppError from "../utils/appError.js";
 import { getProjectByCode } from "../utils/getProjectByCode.js";
 import { createNotification } from "./notificationService.js";
 
