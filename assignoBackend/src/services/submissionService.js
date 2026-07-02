@@ -1,6 +1,6 @@
 import Task from "../models/task.js";
 import Project from "../models/project.js";
-import TaskSubmission from "../models/taskSubmission.js";
+import TaskSubmission from "../models/tasksubmission.js";
 import User from "../models/user.js";
 import AppError from "../utils/appError.js";
 import cloudinary from "../config/cloudinary.js";
