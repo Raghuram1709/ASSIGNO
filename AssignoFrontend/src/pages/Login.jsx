@@ -5,7 +5,6 @@ import { useAppDispatch, useAppSelector } from '../app/reduxHooks';
 import { loginUser } from '../features/auth/authThunk';
 import { clearError } from '../features/auth/authSlice';
 import { toast } from 'react-toastify';
-import Loader from '../components/Loader';
 import '../styles/auth.css';
 const Login = () => {
 
@@ -137,7 +136,7 @@ const Login = () => {
                         className="auth-btn"
                         disabled={loading}
                     >
-                        {loading ? <Loader variant="sweep" size="small" /> : "Login"}
+                        Login
                     </button>
 
                 </form>

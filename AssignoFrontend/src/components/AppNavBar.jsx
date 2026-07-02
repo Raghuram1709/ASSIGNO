@@ -86,8 +86,13 @@ const AppNavBar = () => {
     return () => clearInterval(interval);
   }, [dispatch, token]);
 
+  const navbarClass =
+  location.pathname !== "/"
+    ? "navbar"
+    : `navbar ${isScrolled ? "scrolled" : "transparent-nav"}`;
+
   return (
-    <nav className={`navbar ${location.pathname === "/" && !isScrolled ? "transparent-nav" : ""}`}>
+    <nav className={navbarClass}>
       <div className="navbar-container">
         <div className="navbar-left">
           <Link

@@ -25,7 +25,7 @@ nav {
 }
 
 /* Light mode scrolled nav - opaque frosted */
-nav.scrolled {
+.navbar.scrolled {
   background: rgba(246, 241, 242, 0.93) !important;
   backdrop-filter: blur(24px) !important;
   -webkit-backdrop-filter: blur(50px) !important;
@@ -34,7 +34,7 @@ nav.scrolled {
 }
 
 /* Dark mode scrolled nav - opaque frosted dark */
-.dark nav.scrolled {
+.dark .navbar.scrolled {
   background: rgba(4, 29, 21, 0.95) !important;
   backdrop-filter: blur(50px) !important;
   -webkit-backdrop-filter: blur(24px) !important;
