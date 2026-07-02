@@ -26,7 +26,7 @@ nav {
 
 /* Light mode scrolled nav - frosted glass */
 nav.scrolled {
-  background: rgba(246, 241, 242, 0.6) !important;
+  background: rgba(246, 241, 242, 0.75) !important;
   backdrop-filter: blur(24px) !important;
   -webkit-backdrop-filter: blur(24px) !important;
   border-bottom: 1px solid rgba(0, 49, 31, 0.08) !important;
@@ -35,7 +35,7 @@ nav.scrolled {
 
 /* Dark mode scrolled nav - frosted dark glass */
 .dark nav.scrolled {
-  background: rgba(4, 29, 21, 0.65) !important;
+  background: rgba(4, 29, 21, 0.78) !important;
   backdrop-filter: blur(24px) !important;
   -webkit-backdrop-filter: blur(24px) !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
