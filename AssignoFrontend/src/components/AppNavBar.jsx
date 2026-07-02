@@ -56,6 +56,24 @@ const AppNavBar = () => {
     navigate("/");
   };
 
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    if (location.pathname !== "/") {
+      setIsScrolled(false);
+      return;
+    }
+
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [location.pathname]);
+
   useEffect(() => {
     if (!token) return;
 
@@ -67,8 +85,9 @@ const AppNavBar = () => {
 
     return () => clearInterval(interval);
   }, [dispatch, token]);
+
   return (
-    <nav className="navbar">
+    <nav className={`navbar ${location.pathname === "/" && !isScrolled ? "transparent-nav" : ""}`}>
       <div className="navbar-container">
         <div className="navbar-left">
           <Link
