@@ -44,14 +44,10 @@ export const assignTaskService = async ({
 
   const createdTasks = await Task.insertMany(taskDocs);
 
-  console.log("1")
-
   await updateMemberProgress({
     userId: assignedTo,
     projectId,
   });
-
-  console.log("2")
 
   await createNotification({
     projectId,

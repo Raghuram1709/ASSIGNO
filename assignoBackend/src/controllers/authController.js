@@ -36,13 +36,10 @@ const getCurrentUser = async (
     next
 ) => {
     try {
-        console.log("getCurrentUser Hit", req.user.id)
-
         const result =
             await authservice.getCurrentUser(
                 req.user.id
             );
-        console.log(result);
         res.status(200).json({
             success: true,
             data: result

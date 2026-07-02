@@ -20,10 +20,7 @@ export const loadAuthToStorage = () => {
         }
 
     } catch (error) {
-
-        console.log(
-            "Failed to load token"
-        );
+        console.error("Failed to load token:", error);
     }
 
     return {

@@ -9,8 +9,6 @@ const ProjectCard = ({project}) => {
     
    const navigate = useNavigate();
 
-    console.log(project);
-
     const dispatch = useAppDispatch();
 
     const { token } = useAppSelector(
@@ -25,14 +23,8 @@ const ProjectCard = ({project}) => {
       (state) => state.member
     );
 
-    console.log("Current projects in state:", projects);
 
     const handleDelete = () => {
-      
-
-      console.log("projectName:", project.title);
-      console.log("Deleting project with ID:", project.projectId);
-
        dispatch(deleteProject(project.projectId,token));
     }
 

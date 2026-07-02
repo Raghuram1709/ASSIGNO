@@ -40,6 +40,10 @@ const authSlice = createSlice({
         setMessage: (state, action) => {
             state.message = action.payload
         },
+        clearError: (state) => {
+            state.error = null;
+            state.message = null;
+        },
         updateUserSuccess: (state, action) => {
             state.loading = false;
             state.user = action.payload;
@@ -53,6 +57,7 @@ export const {
   authSuccess,
   authFailure,
   logoutSuccess,
+  clearError,
   updateUserSuccess
 } = authSlice.actions;
 

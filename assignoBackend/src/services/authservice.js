@@ -17,6 +17,13 @@ const login = async ({email, password, rememberMe}) => {
             throw new AppError("Invalid Credentials", 401)
         }
 
+        // Track current vs last login timestamps
+        if (user.currentLogin) {
+            user.lastLogin = user.currentLogin;
+        }
+        user.currentLogin = new Date();
+        await user.save();
+
         const token = jwt.sign({
                 id: user._id,  email:user.email
             },process.env.JWT_SECRET,
@@ -28,7 +35,14 @@ const login = async ({email, password, rememberMe}) => {
             user: {
                 id: user._id,
                 name: user.name,
-                email: user.email
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                username: user.username,
+                role: user.role,
+                department: user.department,
+                createdAt: user.createdAt,
+                lastLogin: user.lastLogin
             },
             token
         };
@@ -55,7 +69,6 @@ const signUp = async ({name, email, password}) => {
 }
 
 const getCurrentUser = async (userId) => {
-    console.log("getCurrentUser service hit with", userId)
     const user = await User.findById(userId)
         .select("-password");
 
@@ -65,7 +78,6 @@ const getCurrentUser = async (userId) => {
             404
         );
     }
-    console.log(user)
     const userObj = user.toObject();
     userObj.id = userObj._id;
     return userObj;

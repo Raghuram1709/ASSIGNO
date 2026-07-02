@@ -10,19 +10,7 @@ import {
 } from "./submissionSlice";
 
 export const taskSubmission = ({taskId, submissionData, token }) => async (dispatch) => {
-
-    console.log(
-      "Submission Thunk Hit"
-    );
-
-    console.log({
-      taskId,
-      submissionData,
-      tokenPresent: !!token,
-    });
-
     try {
-
       const response =
         await taskSubmissionAPI({
           taskId,
@@ -30,21 +18,13 @@ export const taskSubmission = ({taskId, submissionData, token }) => async (dispa
           token,
         });
 
-      console.log(
-        "Submission Success:",
-        response
-      );
-
       dispatch(updateTaskStatus(response.task))
-
       return response;
 
     } catch (error) {
-
       console.error(
         "Submission Failed:"
       );
-
       console.error(
         error.response?.data ||
         error.message
@@ -77,8 +57,6 @@ export const fetchSubmissions =
         )
       );
 
-      console.log(response.submissions)
-
     } catch (error) {
 
       dispatch(
@@ -97,7 +75,6 @@ export const fetchSubmissions =
 export const fetchMySubmissions =
   (token, projectCode) =>
   async (dispatch) => {
-    console.log("fetchMySubmission Called")
     try {
 
       dispatch(
@@ -108,7 +85,6 @@ export const fetchMySubmissions =
         await fetchMySubmissionsAPI(
           token, projectCode
         );
-      console.log(response)
       dispatch(
         setMySubmissions(
           response.submissions
@@ -140,7 +116,6 @@ export const approveSubmission =
           submissionId,
           token
         );
-      console.log(response.submission)
 
       dispatch(
         updateSubmissionStatus({

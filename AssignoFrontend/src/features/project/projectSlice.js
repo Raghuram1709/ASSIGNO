@@ -21,9 +21,6 @@ const projectSlice = createSlice({
       },
 
       projectSuccess: (state, action) => {
-
-         console.log("SET PROJECTS PAYLOAD:");
-         console.log(action.payload);
          
          state.loading = false;
          state.projects.push({

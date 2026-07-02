@@ -6,12 +6,12 @@ import { useAppDispatch } from './app/reduxHooks';
 import { fetchCurrentUser } from './features/auth/authThunk';
 
 
+import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
-  console.log("App Rendered");
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    console.log("UseEffect Hit")
     const token = localStorage.getItem("token") || sessionStorage.getItem("token");
 
     if (token) {
@@ -22,7 +22,7 @@ function App() {
   return (
     <>
       <AppRoutes />
-      {/* <ToastContainer/> */}
+      <ToastContainer position="top-right" autoClose={3000} theme="dark" />
     </>
   );
 }

@@ -12,13 +12,6 @@ import {
 import { Router } from 'express';
 const router = Router();
 
-console.log("Project routes loaded");
-
-router.use((req, res, next) => {
-   console.log(req.method, req.originalUrl);
-   next();
-});
-
 
 router.post('/projects', createProjectController);
 

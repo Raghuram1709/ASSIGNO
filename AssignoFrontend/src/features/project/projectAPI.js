@@ -2,7 +2,6 @@ import axiosInstance from "../../services/axiosInstance";
 
 export const createProjectAPI = async (projectData, token) => {
 
-   console.log(token)
     const response = await axiosInstance.post("/projects", projectData,
         {
             headers:{
@@ -44,8 +43,6 @@ export const deleteProjectAPI = async (projectCode, token) => {
 
 export const getProjectByCodeAPI = async (projectCode, token) => {
 
-   console.log("API called with projectCode:", projectCode);
-
    const response = await axiosInstance.get(
       `/projects/${projectCode}`,
       {
@@ -54,7 +51,6 @@ export const getProjectByCodeAPI = async (projectCode, token) => {
          }
       }
    );
-   console.log("API response:", response.data);
    return response.data;
 }
 

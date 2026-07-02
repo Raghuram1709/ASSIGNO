@@ -38,8 +38,6 @@ async (req, res, next) => {
 
    try {
 
-      console.log("REQ USER:", req.user);
-
       const projects = await getProjects(req.user.id);
 
       return res.status(200).json({
@@ -69,26 +67,17 @@ export const deleteProjectController = async (req, res, next) => {
 };
 
 export const getProjectByCodeController = async (req, res, next) => {
-    console.log("Get project by code controller called");
-    console.log("URL params:", req.params);
-    console.log("Full URL:", req.originalUrl);
-    console.log("Base URL:", req.baseUrl);
-
    try {
       const { projectCode } = req.params;  
 
-      console.log("Extracted projectCode:", projectCode);
-
       const project = await getProjectByCode(projectCode, req.user.id);
-      
-      console.log("Project found:", project);
       
       res.status(200).json({
          success: true,
          project
       });
    } catch (error) {
-      console.log("Error in getProjectByCodeController:", error.message);
+      console.error("Error in getProjectByCodeController:", error.message);
       next(error);
    }
 };

@@ -74,6 +74,19 @@ const ProfileCard = ({ user }) => {
     }
   };
 
+  const formatLastLogin = (lastLogin) => {
+    if (!lastLogin) return 'First session';
+    const date = new Date(lastLogin);
+    if (isNaN(date.getTime())) return lastLogin;
+    return date.toLocaleString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
   return (
     <div className="profile-glass-card">
       <div className="profile-card-header">
@@ -112,7 +125,7 @@ const ProfileCard = ({ user }) => {
           </div>
           <div className="profile-detail-item">
             <Calendar size={16} className="profile-detail-icon" />
-            <span>Member since {user?.memberSince || '2023'}</span>
+            <span>Member since {user?.createdAt ? new Date(user.createdAt).getFullYear() : '2023'}</span>
           </div>
           <div className="profile-detail-item">
             <CheckCircle2 size={16} className="profile-detail-icon" />
@@ -120,7 +133,7 @@ const ProfileCard = ({ user }) => {
           </div>
           <div className="profile-detail-item">
             <Briefcase size={16} className="profile-detail-icon" />
-            <span>Last login: {user?.lastLogin || 'Today'}</span>
+            <span>Last login: {formatLastLogin(user?.lastLogin)}</span>
           </div>
         </div>
 

@@ -5,10 +5,6 @@ import {
 } from "../services/notificationService.js";
 
 export const fetchNotificationsController = async (req, res, next ) => {
-    console.log(
-  "Logged User:",
-  req.user
-);
     try {
 
       const notifications =

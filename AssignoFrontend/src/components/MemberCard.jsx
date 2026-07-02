@@ -3,6 +3,7 @@ import AssignTask from './AssignTask';
 import { ProgressBar } from './ProgressBars.jsx';
 import { useAppDispatch, useAppSelector } from '../app/reduxHooks';
 import { assignTask } from '../features/task/taskThunk.js';
+import { toast } from 'react-toastify';
 import '../styles/memberCard.css';
 import { FaCircleCheck, FaRegCircleCheck } from "react-icons/fa6";
 
@@ -32,6 +33,7 @@ const MemberCard = ({ member, onClick }) => {
       })
     );
 
+    toast.success("Task assigned successfully!");
     setIsOpen(false);
   };
 

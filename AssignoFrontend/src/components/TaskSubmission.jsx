@@ -121,51 +121,43 @@ const TaskSubmission = ({ tasks = [], closeModel, onSubmit }) => {
       }, 300);
    };
 
-//    useEffect(() => {
-//    console.log(
-//       "selectedTask changed:",
-//       selectedTask
-//    );
-// }, [selectedTask]);
+    return (
 
-   return (
+       <div className={`task-submission ${
+          closing? "modal-exit" :
+          "modal-enter"
+       }`}>
 
-      <div className={`task-submission ${
-         closing? "modal-exit" :
-         "modal-enter"
-      }`}>
+          <h2 className="task-submission-title">
+             Submit Task
+          </h2>
 
-         <h2 className="task-submission-title">
-            Submit Task
-         </h2>
+          <form
+             onSubmit={handleSubmit}
+             className="task-form"
+          >
 
-         <form
-            onSubmit={handleSubmit}
-            className="task-form"
-         >
+             <div className="form-group">
 
-            <div className="form-group">
+                <label>
+                   Select Task
+                </label>
 
-               <label>
-                  Select Task
-               </label>
+                <CustomSelect
+                   options={tasks}
+                   value={
+                      tasks.find(
+                         task => task.taskId === selectedTask
+                      )
+                   }
+                   onChange={(task) =>{
+                      setSelectedTask(task.taskId)
 
-               <CustomSelect
-                  options={tasks}
-                  value={
-                     tasks.find(
-                        task => task.taskId === selectedTask
-                     )
-                  }
-                  onChange={(task) =>{
-                     console.log("Received Task:", task)
-                     setSelectedTask(task.taskId)
-
-                  }
-                  }
-                  placeholder="Select Task"
-                  labelKey="title"
-               />
+                   }
+                   }
+                   placeholder="Select Task"
+                   labelKey="title"
+                />
 
             </div>
 

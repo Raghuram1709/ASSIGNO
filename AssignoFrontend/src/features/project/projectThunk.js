@@ -25,13 +25,11 @@ export const createProject =
          token
       );
 
-      console.log(response);
 
       dispatch(projectSuccess(response.project));
 
    } catch (error) {
 
-      console.log(error.response);
 
       dispatch(
          projectFailure(
@@ -83,9 +81,6 @@ export const deleteProject = (projectId, token) => async (dispatch) => {
 
 
    } catch (error) {
-   console.log("Full error:", error);
-   console.log("Response:", error.response);
-   console.log("Message:", error.message);
 
    dispatch(
       projectFailure(

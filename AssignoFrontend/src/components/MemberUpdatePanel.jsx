@@ -12,11 +12,9 @@ import {
   fetchMySubmissions,
   taskSubmission,
 } from "../features/submissions/submissionThunk";
+import { toast } from "react-toastify";
 
 const MemberUpdatePanel = ({projectCode}) => {
-
-  console.log("projectCode prop:", projectCode);
-console.log(typeof projectCode);
 
   const dispatch =
     useAppDispatch();
@@ -72,6 +70,7 @@ console.log(typeof projectCode);
         })
       );
 
+      toast.success("Task submitted for review!");
       setShowSubmission(
         false
       );

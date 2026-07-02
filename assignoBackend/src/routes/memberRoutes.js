@@ -9,9 +9,6 @@ import {
 } from "../controllers/memberController.js";
 
 const router = Router();
-console.log("Member routes initialized");
-
-console.log("Member routes loaded");
 
 router.post(
    "/projects/:projectCode/members",

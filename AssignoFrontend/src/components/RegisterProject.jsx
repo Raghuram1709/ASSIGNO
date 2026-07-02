@@ -6,6 +6,7 @@ import {
 
 import { createProject }
 from '../features/project/projectThunk';
+import { toast } from 'react-toastify';
 
 import { MdClose } from "react-icons/md";
 
@@ -42,6 +43,8 @@ const RegisterProject = ({ closeModal }) => {
             token
          }));
 
+         toast.success("Project created successfully!");
+
          setTitle("");
          setDescription("");
          setCompany("");
@@ -50,7 +53,7 @@ const RegisterProject = ({ closeModal }) => {
          closeModal();
 
       } catch (error) {
-         console.log(error);
+         console.error(error);
       }
    };
 

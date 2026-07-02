@@ -135,8 +135,6 @@ const CustomSelect = ({
                               "
 
                               onClick={() => {
-                                 console.log("OPTION CLICKED");
-                                 console.log(option);
                                  onChange(
                                     option
                                  );

@@ -34,7 +34,9 @@ const userSchema = new mongoose.Schema(
     year: { type: String, default: "" },
     organization: { type: String, default: "" },
     location: { type: String, default: "" },
-    role: { type: String, default: "member" }
+    role: { type: String, default: "member" },
+    lastLogin: { type: Date, default: null },
+    currentLogin: { type: Date, default: null }
   },
   {
     timestamps: true

@@ -3,8 +3,7 @@ import Login from '../pages/Login'
 import SignUp from '../pages/SignUp'
 import { Route, Routes } from 'react-router-dom';
 import Projects from '../pages/Projects';
-import NavBar from '../components/NavBar';
-import AuthLayout from '../layouts/authLayout';
+import AuthLayout from '../layouts/AuthLayout';
 import MainLayout from '../layouts/MainLayout';
 import Home from '../pages/Home';
 import ProtectedRoute from './ProtectedRoute';

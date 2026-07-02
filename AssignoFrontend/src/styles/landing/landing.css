@@ -54,7 +54,7 @@
 
     /* ─── NAV ────────────────────────────────────────────────── */
     nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      position: sticky; top: 0; left: 0; right: 0; z-index: 100;
       background: transparent;
       border-bottom: none;
       transition: background 0.3s, backdrop-filter 0.3s, border-bottom 0.3s, box-shadow 0.3s;
@@ -332,7 +332,7 @@
       left: -100px;
       height: 100%;
       width: 100px;
-      background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+      background: linear-gradient(90deg,transparent, var(--text-primary), transparent);
       animation: pulse-travel 4s infinite ease-in-out;
       box-shadow: 0 0 10px var(--accent-primary);
     }

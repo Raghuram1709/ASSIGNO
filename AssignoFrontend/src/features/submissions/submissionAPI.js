@@ -6,15 +6,6 @@ export const taskSubmissionAPI = async ({
   token,
 }) => {
 
-  console.log(
-    "Task Submission API Hit"
-  );
-
-  console.log({
-    taskId,
-    submissionData,
-  });
-
   const formData =
     new FormData();
 
@@ -39,11 +30,6 @@ export const taskSubmissionAPI = async ({
         file
       );
     }
-  );
-
-  console.log(
-    "Files Count:",
-    submissionData?.files?.length || 0
   );
 
   const response =

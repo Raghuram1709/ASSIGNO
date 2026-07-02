@@ -6,7 +6,6 @@ from "../services/memberService.js";
 
 export const addMembersController =
 async (req, res, next) => {
-   console.log("Add Members Controller Invoked");
 
    try {
 

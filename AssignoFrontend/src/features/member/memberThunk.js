@@ -35,7 +35,6 @@ export const fetchProjectMembers = ({ projectCode, token }) => async (dispatch) 
         dispatch(memberStart());
 
         const response = await getProjectMembersAPI({ projectCode, token });
-        console.log("Fetched members:", response.members);
         dispatch(setMembers(response.members));
     } catch (error) {
         dispatch(

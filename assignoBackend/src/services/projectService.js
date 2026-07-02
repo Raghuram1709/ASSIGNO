@@ -40,15 +40,12 @@ export const createProject = async ({
     createdBy,
   });
   
-  console.log("Project created:", project);
   await Member.create({
       user: createdBy,
       project: project._id,
       role: "lead"
    });
    
-   console.log("Membership created for project lead");
-  
   return {
     projectId: project.id,
     projectCode: project.projectCode,
@@ -72,18 +69,6 @@ export const getProjects = async (userId) => {
    if (!memberships.length) {
       return [];
    }
-   console.log(
-      "MEMBERSHIPS AFTER POPULATE:",
-      JSON.stringify(memberships, null, 2)
-   );
-
-  memberships.forEach((m, index) => {
-      console.log(
-         `PROJECT ${index}:`,
-         m.project
-      );
-   });
-
 
    return memberships.map(
       membership => ({
@@ -112,8 +97,6 @@ export const deleteProject = async (projectCode, userId) => {
    await Member.deleteMany({ project: project._id });
    // Delete the project
    await Project.findByIdAndDelete(project._id);
-
-   console.log("Deleted project:", project.projectCode);
 
    return project;
 };

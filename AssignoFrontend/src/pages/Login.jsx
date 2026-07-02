@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import PasswordInput from '../components/PasswordInput';
 import { useAppDispatch, useAppSelector } from '../app/reduxHooks';
 import { loginUser } from '../features/auth/authThunk';
+import { clearError } from '../features/auth/authSlice';
+import { toast } from 'react-toastify';
 import '../styles/auth.css';
 const Login = () => {
 
@@ -33,10 +35,17 @@ const Login = () => {
     };
 
     useEffect(() => {
+        dispatch(clearError());
+    }, [dispatch]);
+
+    useEffect(() => {
         if (isAuthenticated) {
+            if (message) {
+                toast.success(message);
+            }
             navigate('/projects')
         }
-    }, [isAuthenticated, navigate])
+    }, [isAuthenticated, message, navigate])
     return (
 
         <div className="auth-page">
@@ -50,6 +59,8 @@ const Login = () => {
                 <p className="auth-subtitle">
                     Track your projects, deadlines, and progress effortlessly.
                 </p>
+
+                {error && <div className="auth-error-banner">{error}</div>}
 
                 <form
                     className="auth-form"

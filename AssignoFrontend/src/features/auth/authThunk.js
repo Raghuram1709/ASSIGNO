@@ -23,7 +23,6 @@ export const signupUser = (userData) => async (dispatch) => {
     try {
         const response = await signupAPI(userData);
 
-
         dispatch(authSuccess({
             ...response.data,
             message: response.message
@@ -38,12 +37,10 @@ export const signupUser = (userData) => async (dispatch) => {
 };
 
 export const loginUser = (userData) => async (dispatch) => {
-
     dispatch(authStart());
 
     try {
         const response = await loginAPI(userData);
-
 
         saveAuthToStorage(
             response.data.token,
@@ -52,9 +49,8 @@ export const loginUser = (userData) => async (dispatch) => {
 
         dispatch(authSuccess({
             ...response.data,
-            message:response.message,
-            rememberMe:
-            userData.rememberMe
+            message: response.message,
+            rememberMe: userData.rememberMe
         }));
     } catch (error) {
         dispatch(
@@ -65,19 +61,11 @@ export const loginUser = (userData) => async (dispatch) => {
     }
 };
 
-export const fetchCurrentUser =
-(token) => async (dispatch) => {
-    
+export const fetchCurrentUser = (token) => async (dispatch) => {
     dispatch(authStart());
 
     try {
-        console.log("2");
-        const response =
-            await getCurrentUserAPI(
-                token
-            );
-        
-        
+        const response = await getCurrentUserAPI(token);
 
         dispatch(
             authSuccess({
@@ -85,14 +73,10 @@ export const fetchCurrentUser =
                 token
             })
         );
-
     } catch (error) {
-
         dispatch(
             authFailure(
-                error.response?.data
-                    ?.message ||
-                "Failed to load user"
+                error.response?.data?.message || "Failed to load user"
             )
         );
     }

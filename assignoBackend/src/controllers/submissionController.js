@@ -10,7 +10,6 @@ export const submitTaskController =
   async (req, res, next) => {
     try {
       const { taskId } = req.params;
-      console.log("TaskSubmission controller called with", taskId, req.body, req.files || "No files");
 
       const uploadedFiles = req.files || [];
 
@@ -36,7 +35,6 @@ export const submitTaskController =
 
 export const fetchProjectSubmissionsController =
   async (req, res, next) => {
-    console.log("fetchProjectSubmission Called")
     try {
       const { projectCode } =
         req.params;
@@ -63,7 +61,6 @@ export const fetchMySubmissionsController =
     try {
       const { projectCode } =
       req.params;
-      console.log("fetchMySubmission cont hit with", projectCode, req.user.id)
       const submissions =
         await fetchMySubmissionsService(
           req.user.id,

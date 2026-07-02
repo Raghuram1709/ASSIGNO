@@ -33,7 +33,6 @@ export const submitTaskService = async ({
   links = [],
   files = [],
 }) => {
-  console.log("submitTaskService hit with:", taskId, submittedBy);
   const uploadedFileUrls = await Promise.all(
     files.map(file => uploadToCloudinary(file.path))
   );
@@ -94,7 +93,6 @@ export const fetchProjectSubmissionsService =
     projectCode,
     userId,
   }) => {
-    console.log("fetch submission service called:", projectCode, userId)
     const project = await getProjectByCode(projectCode)
 
     if (!project) {
@@ -147,14 +145,10 @@ export const fetchProjectSubmissionsService =
     return submissions;
 };
 
-//-----------------------------------------
-
 export const fetchMySubmissionsService =
   async (userId, projectCode) => {
-    console.log("fetchmysub hit")
     const project = await getProjectByCode(projectCode);
 
-    console.log(project)
     const submissions = 
       await TaskSubmission.find({
         submittedBy: userId,

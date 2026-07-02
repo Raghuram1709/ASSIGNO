@@ -36,13 +36,10 @@ const ProjectDashboard = () => {
 
   const handleMemberSelect = (member) => {
     setSelectedMember(member);
-    setTaskPage(1); // Reset task page when member changes
+    setTaskPage(1);
   };
-  console.log(selectedMember)
 
   const { projectCode } = useParams();
-  console.log("projectCode prop:", projectCode);
-console.log(typeof projectCode);
 
   const { selectedProject } = useAppSelector(
     (state) => state.project
@@ -51,7 +48,6 @@ console.log(typeof projectCode);
   const { token, user } = useAppSelector(
     (state) => state.auth
   );
-  console.log(token)
   const { error, members } = useAppSelector(
     (state) => state.member
   );
@@ -81,6 +77,7 @@ console.log(typeof projectCode);
         })
       );
 
+      toast.success("Members added successfully!");
       setShowAddMembers(false);
     } catch (error) {
       console.error(
@@ -91,7 +88,6 @@ console.log(typeof projectCode);
   };
 
   const handleAssignTask = async (tasks) => {
-    console.log("handleAssignTask Called")
     await dispatch(
       assignTask({
         projectId: selectedProject.projectId,
@@ -101,6 +97,7 @@ console.log(typeof projectCode);
       })
     );
 
+    toast.success("Task assigned successfully!");
     setShowAssignTask(false);
   };
 

@@ -297,3 +297,13 @@ body {
   overflow-x: hidden;
 
 }
+
+/* Prevent Toastify wrapper from adding empty space/height at bottom of body */
+.Toastify {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: visible;
+  padding: 0;
+  margin: 0;
+}

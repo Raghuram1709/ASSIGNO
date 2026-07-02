@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import PasswordInput from '../components/PasswordInput';
 import { useAppDispatch, useAppSelector } from '../app/reduxHooks';
 import { signupUser } from '../features/auth/authThunk';
+import { clearError } from '../features/auth/authSlice';
+import { toast } from 'react-toastify';
 
 const SignUp = () => {
 
@@ -14,7 +16,7 @@ const SignUp = () => {
     const [password, setPassword] = useState("");
     const dispatch = useAppDispatch();
 
-    const {isAuthenticated} = useAppSelector(
+    const {isAuthenticated, error, message} = useAppSelector(
             (state) => state.auth
         );
 
@@ -35,10 +37,17 @@ const SignUp = () => {
     };
 
     useEffect(() => {
+        dispatch(clearError());
+    }, [dispatch]);
+
+    useEffect(() => {
         if(isAuthenticated) {
+            if (message) {
+                toast.success(message);
+            }
             navigate('/')
         }
-    }, [isAuthenticated, navigate])
+    }, [isAuthenticated, message, navigate])
 
     return (
 
@@ -53,6 +62,8 @@ const SignUp = () => {
                 <p className="auth-subtitle">
                     Create an account and start building without chaos.
                 </p>
+
+                {error && <div className="auth-error-banner">{error}</div>}
 
                 <form
                     className="auth-form"

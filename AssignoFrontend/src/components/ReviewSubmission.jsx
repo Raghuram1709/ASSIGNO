@@ -9,6 +9,7 @@ import {
     approveSubmission,
     rejectSubmission,
 } from "../features/submissions/submissionThunk";
+import { toast } from "react-toastify";
 
 
 const ReviewSubmission = ({ submission, onBack }) => {
@@ -33,6 +34,8 @@ const ReviewSubmission = ({ submission, onBack }) => {
                     token
                 )
             );
+
+            toast.success("Submission approved successfully!");
 
             setShowApproveConfirm(
                 false
@@ -68,6 +71,8 @@ const ReviewSubmission = ({ submission, onBack }) => {
                     token
                 )
             );
+
+            toast.success("Submission rejected successfully!");
 
             onBack();
 
