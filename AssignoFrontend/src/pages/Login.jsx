@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import PasswordInput from '../components/PasswordInput';
 import { useAppDispatch, useAppSelector } from '../app/reduxHooks';
 import { loginUser } from '../features/auth/authThunk';
 import { clearError } from '../features/auth/authSlice';
 import { toast } from 'react-toastify';
+import Loader from '../components/Loader';
 import '../styles/auth.css';
 const Login = () => {
 
@@ -14,7 +15,7 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [rememberMe, setRememberMe] = useState(false);
     const dispatch = useAppDispatch();
-    const {isAuthenticated, error, message} = useAppSelector(
+    const {isAuthenticated, error, message, loading} = useAppSelector(
         (state) => state.auth
     );
 
@@ -134,8 +135,9 @@ const Login = () => {
                     <button
                         type="submit"
                         className="auth-btn"
+                        disabled={loading}
                     >
-                        Login
+                        {loading ? <Loader variant="sweep" size="small" /> : "Login"}
                     </button>
 
                 </form>

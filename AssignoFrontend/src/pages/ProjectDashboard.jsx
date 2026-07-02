@@ -9,15 +9,14 @@ import AddMembers from "../components/AddMembers";
 import { CircularProgressBar } from "../components/ProgressBars.jsx";
 import MemberCard from "../components/MemberCard";
 import ProjectStats from "../components/ProjectStats";
-import TaskSubmission from "../components/TaskSubmission";
 import TaskCard from "../components/TaskCard";
 import AssignTask from "../components/AssignTask";
+import Loader from "../components/Loader";
 import "../styles/projectdashboard.css";
 import MemberUpdatePanel from "../components/MemberUpdatePanel.jsx";
 import { assignTask } from '../features/task/taskThunk.js';
 import LeadUpdatePanel from "../components/LeadUpdatePanel.jsx";
 import { Settings } from 'lucide-react';
-import { MdSettings } from "react-icons/md";
 import "../styles/updatePanel.css";
 import Pagination from "../components/Pagination";
 import "../styles/animations.css";
@@ -139,14 +138,11 @@ const ProjectDashboard = () => {
 
   
   if (!user) {
-    return <p>Loading User...</p>;
+    return <Loader variant="orbit" fullscreen={true} />;
   }
-  const myTasks = tasks.filter(
-        task => task.assignedTo === user.id
-    );
 
   if (!selectedProject) {
-    return <p>Loading project...</p>;
+    return <Loader variant="orbit" fullscreen={true} />;
   }
 
   const isLead =
