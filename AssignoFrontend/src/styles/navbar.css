@@ -1,12 +1,13 @@
 .navbar {
   position: sticky;
   top: 0;
+  background: var(--glass-bg);
   box-shadow: var(--shadow-primary);
-  /* background: var(--glass-bg); */
-  backdrop-filter: blur(40px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--glass-border);
   z-index: 1000;
-  transition: background 0.3s, backdrop-filter 0.3s, border-bottom 0.3s, box-shadow 0.3s;
+  transition: background 0.4s ease, backdrop-filter 0.4s ease, border-bottom 0.4s ease, box-shadow 0.4s ease;
 }
 
 .navbar.transparent-nav {
