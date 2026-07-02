@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Sling as Hamburger } from "hamburger-react";
 import { MdLightMode, MdDarkMode } from "react-icons/md";
 import { useAppDispatch, useAppSelector } from "../app/reduxHooks";
@@ -59,19 +59,21 @@ const AppNavBar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    if (location.pathname !== "/") {
-      setIsScrolled(false);
-      return;
-    }
-
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      if (location.pathname !== "/") {
+        setIsScrolled(false);
+      } else {
+        setIsScrolled(window.scrollY > 20);
+      }
     };
 
-    handleScroll();
-
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const timer = setTimeout(handleScroll, 0);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      clearTimeout(timer);
+    };
   }, [location.pathname]);
 
   useEffect(() => {
@@ -86,10 +88,12 @@ const AppNavBar = () => {
     return () => clearInterval(interval);
   }, [dispatch, token]);
 
-  const navbarClass =
-  location.pathname !== "/"
-    ? "navbar"
-    : `navbar ${isScrolled ? "scrolled" : "transparent-nav"}`;
+  const isHome = location.pathname === "/";
+
+  const navbarClass = `navbar ${isHome
+      ? (isScrolled ? "scrolled" : "transparent-nav")
+      : "scrolled"
+    }`;
 
   return (
     <nav className={navbarClass}>
