@@ -24,22 +24,22 @@ nav {
   transition: background 0.4s ease, backdrop-filter 0.4s ease, border-bottom 0.4s ease, box-shadow 0.4s ease;
 }
 
-/* Light mode scrolled nav - frosted glass */
+/* Light mode scrolled nav - opaque frosted */
 nav.scrolled {
-  background: rgba(246, 241, 242, 0.75) !important;
+  background: rgba(246, 241, 242, 0.93) !important;
   backdrop-filter: blur(24px) !important;
   -webkit-backdrop-filter: blur(24px) !important;
-  border-bottom: 1px solid rgba(0, 49, 31, 0.08) !important;
-  box-shadow: 0 2px 24px rgba(0, 49, 31, 0.08) !important;
+  border-bottom: 1px solid rgba(0, 49, 31, 0.1) !important;
+  box-shadow: 0 2px 24px rgba(0, 49, 31, 0.1) !important;
 }
 
-/* Dark mode scrolled nav - frosted dark glass */
+/* Dark mode scrolled nav - opaque frosted dark */
 .dark nav.scrolled {
-  background: rgba(4, 29, 21, 0.78) !important;
+  background: rgba(4, 29, 21, 0.95) !important;
   backdrop-filter: blur(24px) !important;
   -webkit-backdrop-filter: blur(24px) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
-  box-shadow: 0 2px 24px rgba(0, 0, 0, 0.3) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07) !important;
+  box-shadow: 0 2px 24px rgba(0, 0, 0, 0.4) !important;
 }
 
 .navbar-container {
