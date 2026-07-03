@@ -356,9 +356,8 @@
     .step-icon {
       width: 52px; height: 52px;
       border-radius: 10px;
-      background: var(--glass-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      background: var(--text-primary);
+      
       border: 1px solid var(--border-color);
       display: flex; align-items: center; justify-content: center;
       /* color: var(--text-primary); */
