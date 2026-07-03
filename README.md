@@ -1,10 +1,12 @@
-# ASSIGNO 🚀
+# ASSIGNO
 
 ASSIGNO is a robust, full-stack collaborative project management and task assignment platform. Designed to help teams effortlessly create projects, assign roles, distribute tasks, and track progress all from an intuitive, Glassmorphism-styled workspace.
 
+Live Deployment: [https://assigno-three.vercel.app/](https://assigno-three.vercel.app/)
+
 ---
 
-## 🌟 Features
+## Features
 
 - **Role-Based Workspaces**: Distinguish between Projects You Lead and Projects You Contribute To.
 - **Dynamic Task Management**: Create tasks, assign deadlines, set priority levels, and manage review cycles.
@@ -15,7 +17,7 @@ ASSIGNO is a robust, full-stack collaborative project management and task assign
 
 ---
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 **Frontend**
 - React 19 (via Vite)
@@ -32,7 +34,7 @@ ASSIGNO is a robust, full-stack collaborative project management and task assign
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ASSIGNO is set up as a monolithic workspace containing both the frontend and backend applications:
 
@@ -57,7 +59,7 @@ ASSIGNO/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 Make sure you have the following installed on your machine:
@@ -108,10 +110,10 @@ Open your browser and navigate to `http://localhost:5173`.
 
 ---
 
-## 🛡️ Security & Environment Notes
+## Security & Environment Notes
 Ensure that you **never** commit your `.env` files. The root `.gitignore` is already configured to prevent this. 
 
 ---
 
-## 🤝 Contributing
+## Contributing
 Contributions, issues, and feature requests are welcome! Feel free to check the issues page.

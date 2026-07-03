@@ -11,6 +11,7 @@ import StatisticsTab from '../components/project-settings/StatisticsTab';
 import ProjectActions from '../components/project-settings/ProjectActions';
 import '../styles/projectSettings.css';
 import { ArrowLeft } from 'lucide-react';
+import Loader from '../components/Loader';
 
 const ProjectSettings = () => {
   const { projectCode } = useParams();
@@ -44,7 +45,7 @@ const ProjectSettings = () => {
   }, [projectCode, token, navigate]);
 
   if (loading || !user || !projectData) {
-    return <div style={{ padding: '2rem', textAlign: 'center' }}>Loading Settings...</div>;
+    return <Loader variant="orbit" fullscreen={true} />;
   }
 
   const isLead = user.id === projectData.createdBy._id;
