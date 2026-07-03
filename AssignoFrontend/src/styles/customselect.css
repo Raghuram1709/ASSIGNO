@@ -31,7 +31,9 @@
 
    width: 100%;
 
-   overflow: hidden;
+   max-height: 220px;
+
+   overflow-y: auto;
 
    border-radius: 8px;
 
@@ -44,10 +46,10 @@
    box-shadow:
       var(--shadow-primary);
 
-   z-index: 999;
+   z-index: 9999;
 
    animation:
-      fadeIn 0.5s ease;
+      fadeIn 0.25s ease;
 }
 
 @keyframes fadeIn {
@@ -97,5 +99,37 @@
 
    transform:
       rotate(-180deg);
+}
+
+/* Notification Date Filter CustomSelect Variant */
+.custom-select-notification {
+   width: 160px;
+}
+
+.custom-select-notification .custom-select-trigger {
+   padding: 0.4rem 0.8rem;
+   border-radius: 8px;
+   border: 1.5px solid var(--border-color);
+   background: var(--bg-card);
+   color: var(--text-primary);
+   font-size: 0.9rem;
+   font-weight: 500;
+   box-shadow: none;
+}
+
+.custom-select-notification .custom-select-trigger:hover {
+   border-color: var(--accent-primary);
+   background: var(--bg-secondary);
+}
+
+.custom-select-notification .custom-select-dropdown {
+   border-radius: 8px;
+   border: 1.5px solid var(--border-color);
+}
+
+.custom-select-notification .custom-select-option {
+   padding: 0.5rem 0.8rem;
+   font-size: 0.9rem;
+   font-weight: 500;
 }
 

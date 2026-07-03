@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "../app/reduxHooks";
 import { readAllNotifications } from "../features/notifications/notificationThunk";
 import NotificationCard from "../components/notificationComponents/NotificationCard";
 import Pagination from "../components/Pagination";
+import CustomSelect from "../components/CustomSelect";
 import "../styles/notifications.css";
 import "../styles/animations.css";
 
@@ -11,14 +12,54 @@ const NotificationsPage = () => {
   const { token } = useAppSelector(state => state.auth);
   const { notifications, loading } = useAppSelector(state => state.notification);
   const [filter, setFilter] = useState("all");
+  const [dateFilter, setDateFilter] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const ITEMS_PER_PAGE = 3;
 
+  const dateOptions = useMemo(() => [
+    { value: "all", label: "All Dates" },
+    { value: "today", label: "Today" },
+    { value: "week", label: "Last 7 Days" },
+    { value: "month", label: "Last 30 Days" }
+  ], []);
+
   const filteredNotifications = useMemo(() => {
-    if (filter === "all") return notifications;
-    if (filter === "read") return notifications.filter(n => n.isRead);
-    return notifications.filter(n => !n.isRead);
-  }, [notifications, filter]);
+    let result = notifications;
+    
+    // Status filter
+    if (filter === "read") {
+      result = notifications.filter(n => n.isRead);
+    } else if (filter === "unread") {
+      result = notifications.filter(n => !n.isRead);
+    }
+    
+    // Date filter
+    if (dateFilter !== "all") {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      
+      result = result.filter(notif => {
+        const dateStr = notif.createdAt || notif.timestamp;
+        if (!dateStr) return true;
+        const date = new Date(dateStr);
+        
+        if (dateFilter === "today") {
+          return date >= today;
+        } else if (dateFilter === "week") {
+          const weekAgo = new Date();
+          weekAgo.setDate(today.getDate() - 7);
+          return date >= weekAgo;
+        } else if (dateFilter === "month") {
+          const monthAgo = new Date();
+          monthAgo.setMonth(today.getMonth() - 1);
+          return date >= monthAgo;
+        }
+        return true;
+      });
+    }
+    
+    return result;
+  }, [notifications, filter, dateFilter]);
 
   const groupedNotifications = useMemo(() => {
     const groups = {};
@@ -62,22 +103,34 @@ const NotificationsPage = () => {
         <div className="filter-group">
           <button
             className={`filter-btn ${filter === "all" ? "active" : ""}`}
-            onClick={() => setFilter("all")}
+            onClick={() => { setFilter("all"); setCurrentPage(1); }}
           >
             All ({notifications.length})
           </button>
           <button
             className={`filter-btn ${filter === "unread" ? "active" : ""}`}
-            onClick={() => setFilter("unread")}
+            onClick={() => { setFilter("unread"); setCurrentPage(1); }}
           >
             Unread ({notifications.filter(n => !n.isRead).length})
           </button>
           <button
             className={`filter-btn ${filter === "read" ? "active" : ""}`}
-            onClick={() => setFilter("read")}
+            onClick={() => { setFilter("read"); setCurrentPage(1); }}
           >
             Read ({notifications.filter(n => n.isRead).length})
           </button>
+        </div>
+
+        <div className="filter-group" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', fontWeight: '600' }}>Date:</span>
+          <CustomSelect
+            options={dateOptions}
+            value={dateOptions.find(o => o.value === dateFilter)}
+            onChange={(option) => { setDateFilter(option.value); setCurrentPage(1); }}
+            placeholder="Select Date"
+            labelKey="label"
+            variant="notification"
+          />
         </div>
 
         {notifications.some(n => !n.isRead) && (

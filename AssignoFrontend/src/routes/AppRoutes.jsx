@@ -1,6 +1,9 @@
 import React from 'react'
 import Login from '../pages/Login'
 import SignUp from '../pages/SignUp'
+import VerifyOtp from '../pages/VerifyOtp';
+import ForgotPassword from '../pages/ForgotPassword';
+import ResetPassword from '../pages/ResetPassword';
 import { Route, Routes } from 'react-router-dom';
 import Projects from '../pages/Projects';
 import AuthLayout from '../layouts/AuthLayout';
@@ -19,6 +22,9 @@ const AppRoutes = () => {
         <Route element={<AuthLayout />}>
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<SignUp />} />
+          <Route path='/verify-otp' element={<VerifyOtp />} />
+          <Route path='/forgot-password' element={<ForgotPassword />} />
+          <Route path='/reset-password' element={<ResetPassword />} />
         </Route>
         <Route element={<MainLayout />} >
           <Route path="/" element={<Home />} />

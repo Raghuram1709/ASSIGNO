@@ -15,7 +15,9 @@ const userSchema = new mongoose.Schema(
 
     password: {
       type: String,
-      required: true
+      required: function() {
+        return this.authProvider === 'local';
+      }
     },
 
     firstName: { type: String, default: "" },
@@ -36,7 +38,21 @@ const userSchema = new mongoose.Schema(
     location: { type: String, default: "" },
     role: { type: String, default: "member" },
     lastLogin: { type: Date, default: null },
-    currentLogin: { type: Date, default: null }
+    currentLogin: { type: Date, default: null },
+
+    // Verification and Auth Provider fields
+    isVerified: { type: Boolean, default: true },
+    otp: { type: String, default: null },
+    otpExpires: { type: Date, default: null },
+    otpLastSent: { type: Date, default: null },
+    otpResendAttempts: { type: Number, default: 0 },
+    otpVerifyAttempts: { type: Number, default: 0 },
+    authProvider: { type: String, enum: ['local', 'google'], default: 'local' },
+    googleId: { type: String, default: null },
+
+    // Password Reset fields
+    resetPasswordToken: { type: String, default: null },
+    resetPasswordExpires: { type: Date, default: null }
   },
   {
     timestamps: true

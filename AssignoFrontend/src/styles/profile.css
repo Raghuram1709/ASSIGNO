@@ -50,6 +50,29 @@
   -webkit-backdrop-filter: blur(12px);
   position: relative;
   overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.profile-glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.08),
+    transparent
+  );
+  transform: skewX(-25deg);
+  transition: 0.75s;
+  pointer-events: none;
+}
+
+.profile-glass-card:hover::before {
+  left: 150%;
 }
 
 /* Profile Card Specifics */
@@ -220,9 +243,9 @@
 }
 
 .profile-input, .profile-textarea {
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: white;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
   padding: 0.9rem 1.2rem;
   border-radius: 12px;
   font-family: inherit;
@@ -230,14 +253,14 @@
   transition: all 0.3s ease;
   width: 100%;
   box-sizing: border-box;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .profile-input:focus, .profile-textarea:focus {
   outline: none;
-  border-color: #6366f1;
-  background: rgba(0, 0, 0, 0.3);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2), inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-color: var(--accent-primary);
+  background: var(--bg-card);
+  box-shadow: 0 0 0 3px rgba(13, 91, 66, 0.2), inset 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .profile-input:disabled, .profile-textarea:disabled {

@@ -221,6 +221,7 @@ const TaskSubmission = ({ tasks = [], closeModel, onSubmit }) => {
                                     e.target.value
                                  )
                               }
+                              required
                            />
 
                            {
@@ -263,7 +264,7 @@ const TaskSubmission = ({ tasks = [], closeModel, onSubmit }) => {
                   onChange={
                      handleFileSelect
                   }
-                  
+                  required
                />
 
                <div

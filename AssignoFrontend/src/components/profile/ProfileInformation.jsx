@@ -8,18 +8,18 @@ const ProfileInformation = ({ user }) => {
   const [isEditing, setIsEditing] = useState(false);
   
   const initialFormData = {
-    firstName: user?.firstName || 'John',
-    lastName: user?.lastName || 'Doe',
-    username: user?.username || 'johndoe123',
-    email: user?.email || 'johndoe@example.com',
-    phone: user?.phone || '+1 (555) 123-4567',
-    studentId: user?.studentId || '12345678',
-    department: user?.department || 'Computer Science',
-    year: user?.year || 'Junior',
-    role: user?.role || 'Developer',
-    organization: user?.organization || 'Tech Club',
-    location: user?.location || 'New York, USA',
-    bio: user?.bio || 'Passionate software engineering student building cool stuff.',
+    firstName: user?.firstName || '',
+    lastName: user?.lastName || '',
+    username: user?.username || '',
+    email: user?.email || '',
+    phone: user?.phone || '',
+    studentId: user?.studentId || '',
+    department: user?.department || '',
+    year: user?.year || '',
+    role: user?.role || '',
+    organization: user?.organization || '',
+    location: user?.location || '',
+    bio: user?.bio || '',
   };
 
   const dispatch = useDispatch();

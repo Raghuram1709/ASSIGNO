@@ -1,10 +1,16 @@
 import User from "../models/user.js";
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import crypto from 'crypto';
+import { OAuth2Client } from 'google-auth-library';
 import AppError from "../utils/appError.js";
 import Project from "../models/project.js";
 import Task from "../models/task.js";
 import Member from "../models/member.js";
+import { sendVerificationOTP, sendPasswordResetEmail } from "../utils/email.js";
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
 const login = async ({email, password, rememberMe}) => {
     
         const user = await User.findOne({email});
@@ -12,9 +18,19 @@ const login = async ({email, password, rememberMe}) => {
             throw new AppError("User Not Found", 404);
         }
 
+        // Prevent Google accounts from logging in with password unless they set one
+        if (user.authProvider === 'google' && !user.password) {
+            throw new AppError("Please use 'Continue with Google' to sign in.", 400);
+        }
+
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             throw new AppError("Invalid Credentials", 401)
+        }
+
+        // Prevent login for unverified accounts
+        if (!user.isVerified) {
+            throw new AppError("Please verify your email address first.", 403);
         }
 
         // Track current vs last login timestamps
@@ -55,18 +71,346 @@ const signUp = async ({name, email, password}) => {
         throw new AppError('User already exists',409);
     }
     const hashedPassword = await bcrypt.hash(password, 10);
+    
+    // Generate secure 6-digit OTP
+    const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+    const hashedOtp = crypto.createHash('sha256').update(otpCode).digest('hex');
+
     const user = new User({
         name,
         email,
-        password: hashedPassword
+        password: hashedPassword,
+        isVerified: false,
+        otp: hashedOtp,
+        otpExpires: new Date(Date.now() + 5 * 60 * 1000), // 5 minutes expiration
+        otpLastSent: new Date(),
+        otpResendAttempts: 0,
+        otpVerifyAttempts: 0,
+        authProvider: 'local'
     });
-    await user.save()
+
+    await user.save();
+
+    // Send verification email
+    try {
+        await sendVerificationOTP(email, otpCode);
+    } catch (err) {
+        console.error("Failed to send signup OTP email:", err);
+    }
+
     return {
         id: user._id,
         name: user.name,
-        email: user.email
+        email: user.email,
+        isVerified: false
     };
-}
+};
+
+const verifyOTP = async ({ email, otp }) => {
+    if (!email || !otp) {
+        throw new AppError("Email and OTP are required.", 400);
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+        throw new AppError("User not found", 404);
+    }
+
+    if (user.isVerified) {
+        throw new AppError("Email is already verified", 400);
+    }
+
+    // Increment verification attempts
+    user.otpVerifyAttempts += 1;
+
+    // Check limit
+    if (user.otpVerifyAttempts > 5) {
+        user.otp = null;
+        user.otpExpires = null;
+        await user.save();
+        throw new AppError("Too many verification attempts. This OTP has been invalidated. Please request a new one.", 400);
+    }
+
+    // Check expiration
+    if (!user.otp || !user.otpExpires || user.otpExpires < new Date()) {
+        await user.save();
+        throw new AppError("OTP has expired or is invalid. Please request a new one.", 400);
+    }
+
+    // Compare OTP
+    const hashedInputOtp = crypto.createHash('sha256').update(otp.trim()).digest('hex');
+    if (hashedInputOtp !== user.otp) {
+        await user.save();
+        throw new AppError("Invalid verification code. Please check and try again.", 400);
+    }
+
+    // Success! Verify user
+    user.isVerified = true;
+    user.otp = null;
+    user.otpExpires = null;
+    user.otpResendAttempts = 0;
+    user.otpVerifyAttempts = 0;
+    
+    // Set login dates
+    user.currentLogin = new Date();
+    await user.save();
+
+    const token = jwt.sign(
+        { id: user._id, email: user.email },
+        process.env.JWT_SECRET,
+        { expiresIn: "2h" }
+    );
+
+    return {
+        user: {
+            id: user._id,
+            name: user.name,
+            email: user.email,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            username: user.username,
+            role: user.role,
+            department: user.department,
+            createdAt: user.createdAt,
+            lastLogin: user.lastLogin
+        },
+        token
+    };
+};
+
+const resendOTP = async ({ email }) => {
+    if (!email) {
+        throw new AppError("Email is required.", 400);
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+        throw new AppError("User not found", 404);
+    }
+
+    if (user.isVerified) {
+        throw new AppError("Email is already verified", 400);
+    }
+
+    // Check 60 seconds delay
+    const now = new Date();
+    if (user.otpLastSent && (now - user.otpLastSent < 60 * 1000)) {
+        const secondsLeft = Math.ceil(60 - (now - user.otpLastSent) / 1000);
+        throw new AppError(`Please wait ${secondsLeft} seconds before requesting a new OTP.`, 400);
+    }
+
+    // Check maximum resend attempts (3 within validity window)
+    // We check if the previous OTP is still valid (based on expiry). If expired, we reset attempts.
+    const isOtpActive = user.otpExpires && user.otpExpires > now;
+    if (isOtpActive && user.otpResendAttempts >= 3) {
+        throw new AppError("Maximum resend attempts reached. Please wait for the current OTP window to expire (5 mins) before trying again.", 400);
+    }
+
+    // Reset attempts if OTP was expired
+    if (!isOtpActive) {
+        user.otpResendAttempts = 0;
+    }
+
+    // Generate new OTP
+    const newOtp = Math.floor(100000 + Math.random() * 900000).toString();
+    const hashedOtp = crypto.createHash('sha256').update(newOtp).digest('hex');
+
+    // Invalidate old one, update properties
+    user.otp = hashedOtp;
+    user.otpExpires = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes expiration
+    user.otpLastSent = now;
+    user.otpResendAttempts += 1;
+    user.otpVerifyAttempts = 0; // Reset verification attempts for new OTP
+
+    await user.save();
+
+    // Send email
+    try {
+        await sendVerificationOTP(email, newOtp);
+    } catch (err) {
+        console.error("Failed to resend OTP email:", err);
+    }
+
+    return { message: "Verification code sent successfully." };
+};
+
+const googleSignIn = async ({ idToken }) => {
+    if (!idToken) {
+        throw new AppError("Google ID token is required.", 400);
+    }
+
+    let payload;
+    try {
+        const ticket = await client.verifyIdToken({
+            idToken,
+            audience: process.env.GOOGLE_CLIENT_ID
+        });
+        payload = ticket.getPayload();
+    } catch (error) {
+        console.error("Google verify token error:", error);
+        throw new AppError("Invalid Google credential token.", 401);
+    }
+
+    const { sub: googleId, email, name, picture } = payload;
+    if (!email) {
+        throw new AppError("Google account has no email address.", 400);
+    }
+
+    let user = await User.findOne({ email });
+
+    if (user) {
+        // Link Google provider info if not already linked
+        let modified = false;
+        if (user.authProvider !== 'google') {
+            user.authProvider = 'google';
+            modified = true;
+        }
+        if (!user.googleId) {
+            user.googleId = googleId;
+            modified = true;
+        }
+        if (!user.isVerified) {
+            user.isVerified = true; // Google accounts are pre-verified
+            modified = true;
+        }
+        if (modified || user.isModified()) {
+            await user.save();
+        }
+    } else {
+        // Create a new Google user
+        // Pass conditionally not required, so we don't supply password field.
+        user = new User({
+            name: name || email.split('@')[0],
+            email,
+            isVerified: true,
+            authProvider: 'google',
+            googleId,
+            profileImage: {
+                url: picture || "",
+                publicId: ""
+            }
+        });
+        await user.save();
+    }
+
+    // Set login dates
+    if (user.currentLogin) {
+        user.lastLogin = user.currentLogin;
+    }
+    user.currentLogin = new Date();
+    await user.save();
+
+    // Generate JWT token
+    const token = jwt.sign(
+        { id: user._id, email: user.email },
+        process.env.JWT_SECRET,
+        { expiresIn: "2h" }
+    );
+
+    return {
+        user: {
+            id: user._id,
+            name: user.name,
+            email: user.email,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            username: user.username,
+            role: user.role,
+            department: user.department,
+            createdAt: user.createdAt,
+            lastLogin: user.lastLogin
+        },
+        token
+    };
+};
+
+const forgotPassword = async ({ email }) => {
+    if (!email) {
+        throw new AppError("Email is required.", 400);
+    }
+
+    const user = await User.findOne({ email });
+    
+    // Prevent User Enumeration: if user is not found, return successful message anyway!
+    if (!user) {
+        return { message: "If that email address exists in our database, we have sent a password reset link." };
+    }
+
+    // Generate single-use password reset token
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    const hashedToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+
+    user.resetPasswordToken = hashedToken;
+    user.resetPasswordExpires = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes expiration
+    await user.save();
+
+    // Send email
+    const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
+    const resetLink = `${clientUrl}/reset-password?token=${resetToken}`;
+    
+    try {
+        await sendPasswordResetEmail(user.email, resetLink);
+    } catch (err) {
+        console.error("Failed to send password reset email:", err);
+    }
+
+    return { message: "If that email address exists in our database, we have sent a password reset link." };
+};
+
+const validateResetToken = async ({ token }) => {
+    if (!token) {
+        throw new AppError("Token is required.", 400);
+    }
+
+    const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+    const user = await User.findOne({
+        resetPasswordToken: hashedToken,
+        resetPasswordExpires: { $gt: new Date() }
+    });
+
+    if (!user) {
+        throw new AppError("Invalid or expired password reset token.", 400);
+    }
+
+    return { message: "Token is valid." };
+};
+
+const resetPassword = async ({ token, password }) => {
+    if (!token || !password) {
+        throw new AppError("Token and password are required.", 400);
+    }
+
+    if (password.length < 6) {
+        throw new AppError("Password must be at least 6 characters long.", 400);
+    }
+
+    const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+    const user = await User.findOne({
+        resetPasswordToken: hashedToken,
+        resetPasswordExpires: { $gt: new Date() }
+    });
+
+    if (!user) {
+        throw new AppError("Invalid or expired password reset token.", 400);
+    }
+
+    // Update password
+    const hashedPassword = await bcrypt.hash(password, 10);
+    user.password = hashedPassword;
+    
+    // Invalidate reset tokens
+    user.resetPasswordToken = null;
+    user.resetPasswordExpires = null;
+    
+    // Switch to local provider if they are setting a password, but keep google if linked
+    if (user.authProvider === 'google' && !user.password) {
+        user.authProvider = 'local';
+    }
+
+    await user.save();
+
+    return { message: "Password updated successfully." };
+};
 
 const getCurrentUser = async (userId) => {
     const user = await User.findById(userId)
@@ -244,4 +588,4 @@ const deleteAccount = async (userId, password) => {
     return { message: "Account deleted successfully" };
 };
 
-export default { login, signUp, getCurrentUser, updateProfile, updateProfileImage, deleteProfileImage, getUserStatsAndActivities, changePassword, deleteAccount };
+export default { login, signUp, verifyOTP, resendOTP, googleSignIn, forgotPassword, validateResetToken, resetPassword, getCurrentUser, updateProfile, updateProfileImage, deleteProfileImage, getUserStatsAndActivities, changePassword, deleteAccount };

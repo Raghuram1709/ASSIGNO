@@ -6,6 +6,8 @@ import { useAppDispatch, useAppSelector } from '../app/reduxHooks';
 import { signupUser } from '../features/auth/authThunk';
 import { clearError } from '../features/auth/authSlice';
 import { toast } from 'react-toastify';
+import GoogleSignInButton from '../components/GoogleSignInButton';
+import Loader from '../components/Loader';
 
 const SignUp = () => {
 
@@ -16,7 +18,7 @@ const SignUp = () => {
     const [password, setPassword] = useState("");
     const dispatch = useAppDispatch();
 
-    const {isAuthenticated, error, message} = useAppSelector(
+    const {isAuthenticated, error, message, loading} = useAppSelector(
             (state) => state.auth
         );
 
@@ -28,7 +30,7 @@ const SignUp = () => {
             name,
             email,
             password
-        }))
+        }, navigate))
 
     }
 
@@ -52,6 +54,7 @@ const SignUp = () => {
     return (
 
         <div className="auth-page">
+            {loading && <Loader variant="orbit" fullscreen={true} />}
 
             <div className="auth-container">
 
@@ -131,6 +134,12 @@ const SignUp = () => {
                     </button>
 
                 </form>
+
+                <div className="auth-divider">
+                    <span>or</span>
+                </div>
+
+                <GoogleSignInButton />
 
                 <p className="auth-footer">
 

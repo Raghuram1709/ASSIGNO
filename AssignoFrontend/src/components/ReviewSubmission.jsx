@@ -51,16 +51,8 @@ const ReviewSubmission = ({ submission, onBack }) => {
 
     const handleReject = async () => {
 
-        if (
-            !comment.trim()
-        ) {
-
-            alert(
-                "Rejection reason required"
-            );
-
+            toast.warning("Rejection reason required");
             return;
-        }
 
         try {
 

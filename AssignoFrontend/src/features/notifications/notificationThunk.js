@@ -67,6 +67,9 @@ export const readNotification =
         )
       );
 
+      // Trigger notification fetch to refresh feeds
+      dispatch(fetchNotifications(token));
+
     } catch (error) {
 
       dispatch(
@@ -93,6 +96,9 @@ export const readAllNotifications =
       dispatch(
         markAllNotificationsRead()
       );
+
+      // Trigger notification fetch to refresh feeds
+      dispatch(fetchNotifications(token));
 
     } catch (error) {
 

@@ -31,6 +31,11 @@
     padding: 1rem;
 }
 
+@keyframes panelFadeIn {
+    0% { opacity: 0; transform: translateY(15px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
 .submission-container,
 .review-container,
 .communication-panel {
@@ -39,6 +44,7 @@
     border: 3px double var(--text-primary);
     padding: 1rem;
     border-radius: 8px;
+    animation: panelFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) backwards;
 }
 
 .communication-panel {

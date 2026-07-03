@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Key, Trash2, ChevronRight } from 'lucide-react';
+import { Key, Trash2, ChevronRight, Eye, EyeOff } from 'lucide-react';
 import { useAppSelector, useAppDispatch } from '../../app/reduxHooks';
 import { changePasswordAPI, deleteAccountAPI } from '../../features/auth/authAPI';
 import { logoutSuccess } from '../../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import '../../styles/profile.css';
 
 const AccountSettings = () => {
@@ -18,6 +19,11 @@ const AccountSettings = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   
+  // Password Visibility Toggle State
+  const [showCurrent, setShowCurrent] = useState(false);
+  const [showNew, setShowNew] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+
   // Delete State
   const [deletePassword, setDeletePassword] = useState('');
   
@@ -50,6 +56,9 @@ const AccountSettings = () => {
     setDeletePassword('');
     setError('');
     setIsLoading(false);
+    setShowCurrent(false);
+    setShowNew(false);
+    setShowConfirm(false);
   };
 
   const handleChangePassword = async (e) => {
@@ -62,7 +71,7 @@ const AccountSettings = () => {
     try {
       await changePasswordAPI(token, { currentPassword, newPassword });
       resetModals();
-      alert('Password changed successfully');
+      toast.success('Password changed successfully');
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to change password');
       setIsLoading(false);
@@ -126,33 +135,99 @@ const AccountSettings = () => {
             <form onSubmit={handleChangePassword}>
               <div className="profile-form-group" style={{ marginBottom: '1rem' }}>
                 <label className="profile-label">Current Password</label>
-                <input 
-                  type="password" 
-                  className="profile-input" 
-                  value={currentPassword}
-                  onChange={(e) => setCurrentPassword(e.target.value)}
-                  required 
-                />
+                <div style={{ position: 'relative' }}>
+                  <input 
+                    type={showCurrent ? "text" : "password"} 
+                    className="profile-input" 
+                    value={currentPassword}
+                    onChange={(e) => setCurrentPassword(e.target.value)}
+                    required 
+                    style={{ paddingRight: '2.5rem' }}
+                  />
+                  <button
+                    type="button"
+                    style={{
+                      position: 'absolute',
+                      right: '0.75rem',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      background: 'none',
+                      border: 'none',
+                      color: 'var(--text-muted)',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}
+                    onClick={() => setShowCurrent(!showCurrent)}
+                  >
+                    {showCurrent ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
               </div>
               <div className="profile-form-group" style={{ marginBottom: '1rem' }}>
                 <label className="profile-label">New Password</label>
-                <input 
-                  type="password" 
-                  className="profile-input" 
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  required 
-                />
+                <div style={{ position: 'relative' }}>
+                  <input 
+                    type={showNew ? "text" : "password"} 
+                    className="profile-input" 
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    required 
+                    style={{ paddingRight: '2.5rem' }}
+                  />
+                  <button
+                    type="button"
+                    style={{
+                      position: 'absolute',
+                      right: '0.75rem',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      background: 'none',
+                      border: 'none',
+                      color: 'var(--text-muted)',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}
+                    onClick={() => setShowNew(!showNew)}
+                  >
+                    {showNew ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
               </div>
               <div className="profile-form-group" style={{ marginBottom: '1rem' }}>
                 <label className="profile-label">Confirm New Password</label>
-                <input 
-                  type="password" 
-                  className="profile-input" 
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  required 
-                />
+                <div style={{ position: 'relative' }}>
+                  <input 
+                    type={showConfirm ? "text" : "password"} 
+                    className="profile-input" 
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    required 
+                    style={{ paddingRight: '2.5rem' }}
+                  />
+                  <button
+                    type="button"
+                    style={{
+                      position: 'absolute',
+                      right: '0.75rem',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      background: 'none',
+                      border: 'none',
+                      color: 'var(--text-muted)',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}
+                    onClick={() => setShowConfirm(!showConfirm)}
+                  >
+                    {showConfirm ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
               </div>
 
               {error && <p style={{ color: '#dc2626', fontSize: '0.875rem', marginBottom: '1rem' }}>{error}</p>}

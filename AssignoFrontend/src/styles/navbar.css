@@ -151,10 +151,16 @@ nav {
   box-shadow: var(--shadow-combined);
   border: 1.5px solid var(--border-color);
   color: var(--text-primary);
-
   transition: all 0.3s ease;
 }
 
+.theme-btn svg {
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.theme-btn:hover svg {
+  transform: rotate(45deg) scale(1.1);
+}
 
 .theme-btn:active {
   transform: rotate(100deg) scale(0.95);
@@ -180,21 +186,26 @@ nav {
   padding: 5px 10px;
 }
 
+@keyframes badgePulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(166, 59, 18, 0.8); }
+  70% { transform: scale(1.1); box-shadow: 0 0 0 6px rgba(166, 59, 18, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(166, 59, 18, 0); }
+}
+
 .notification-badge {
   position: absolute;
   top: -8px;
   right: -10px;
-
   width: 18px;
   height: 18px;
-
   border-radius: 50%;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
   font-size: 0.7rem;
+  background: var(--rust) !important;
+  color: white !important;
+  animation: badgePulse 2s infinite;
 }
 
 .notification-section {

@@ -451,3 +451,87 @@ body {
   line-height: 1.4;
   animation: fadeUp 0.3s ease;
 }
+
+/* Authentication visual divider */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 1.2rem 0;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.auth-divider:not(:empty)::before {
+  margin-right: .65em;
+}
+
+.auth-divider:not(:empty)::after {
+  margin-left: .65em;
+}
+
+/* Google Sign-in Container */
+.google-signin-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 0.8rem;
+}
+
+/* OTP Code input boxes layout */
+.otp-inputs-wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 1.5rem 0;
+}
+
+.otp-digit-input {
+  width: 52px;
+  height: 55px;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+.otp-digit-input:focus {
+  border-color: var(--accent-secondary);
+  box-shadow: 0 0 0 4px rgba(166, 59, 18, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Loading animations */
+.loading-spinner-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem 0;
+}
+
+.auth-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(166, 59, 18, 0.1);
+  border-radius: 50%;
+  border-top-color: var(--accent-secondary);
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

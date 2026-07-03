@@ -10,6 +10,8 @@ import {
 } from "../features/commincations/communicationThunk";
 
 import CustomSelect from "../components/CustomSelect";
+import Loader from "./Loader";
+import { toast } from "react-toastify";
 
 const CommunicationPanel = ({
   projectCode,
@@ -72,9 +74,7 @@ const CommunicationPanel = ({
       if (
         !message.trim()
       ) {
-        alert(
-          "Message is required"
-        );
+        toast.warning("Message is required");
         return;
       }
 
@@ -82,9 +82,7 @@ const CommunicationPanel = ({
         scope === "member" &&
         !recipientId
       ) {
-        alert(
-          "Please select a member"
-        );
+        toast.warning("Please select a member");
         return;
       }
 
@@ -102,9 +100,7 @@ const CommunicationPanel = ({
           })
         );
 
-        alert(
-          "Message sent successfully"
-        );
+        toast.success("Message sent successfully");
 
         setMessage("");
         setRecipientId("");
@@ -113,7 +109,7 @@ const CommunicationPanel = ({
 
         console.error(error);
 
-        alert(
+        toast.error(
           error.response?.data
             ?.message ||
           "Failed to send message"
@@ -206,19 +202,20 @@ const CommunicationPanel = ({
           }
         />
 
-        <button className="send-msg-btn"
-          onClick={
-            handleSubmit
-          }
-          disabled={
-            sending
-          }
+        <button 
+          className="send-msg-btn"
+          onClick={handleSubmit}
+          disabled={sending}
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
         >
-
-          {sending
-            ? "Sending..."
-            : "Send Message"}
-
+          {sending ? (
+            <>
+              <Loader variant="sweep" size="small" />
+              <span>Sending...</span>
+            </>
+          ) : (
+            "Send Message"
+          )}
         </button>
       </div>
 

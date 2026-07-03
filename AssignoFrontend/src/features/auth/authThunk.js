@@ -3,7 +3,9 @@ import {
   authSuccess,
   authFailure,
   logoutSuccess,
-  updateUserSuccess
+  updateUserSuccess,
+  verificationRequired,
+  setMessage
 } from "./authSlice";
 
 import {
@@ -12,21 +14,36 @@ import {
   getCurrentUserAPI,
   updateProfileAPI,
   uploadProfileImageAPI,
-  deleteProfileImageAPI
+  deleteProfileImageAPI,
+  verifyOTPAPI,
+  resendOTPAPI,
+  googleSignInAPI,
+  forgotPasswordAPI,
+  resetPasswordAPI
 } from "./authAPI";
 
 import { saveAuthToStorage } from "./authLocalStore";
 
-export const signupUser = (userData) => async (dispatch) => {
+export const signupUser = (userData, navigate) => async (dispatch) => {
     dispatch(authStart());
 
     try {
         const response = await signupAPI(userData);
 
-        dispatch(authSuccess({
-            ...response.data,
-            message: response.message
-        }));
+        if (response.data && response.data.isVerified === false) {
+            dispatch(verificationRequired({
+                email: response.data.email,
+                message: response.message
+            }));
+            if (navigate) {
+                navigate('/verify-otp');
+            }
+        } else {
+            dispatch(authSuccess({
+                ...response.data,
+                message: response.message
+            }));
+        }
     } catch (error) {
         dispatch(
             authFailure(
@@ -53,9 +70,111 @@ export const loginUser = (userData) => async (dispatch) => {
             rememberMe: userData.rememberMe
         }));
     } catch (error) {
+        // If user is unverified, store their email so they can go verify it
+        if (error.response?.status === 403 && error.response?.data?.message?.includes("verify")) {
+            dispatch(verificationRequired({
+                email: userData.email,
+                message: error.response.data.message
+            }));
+        }
         dispatch(
             authFailure(
                 error.response?.data?.message || "Login Failed"
+            )
+        );
+    }
+};
+
+export const verifyOtpAction = (verificationData, navigate) => async (dispatch) => {
+    dispatch(authStart());
+    try {
+        const response = await verifyOTPAPI(verificationData);
+        saveAuthToStorage(
+            response.data.token,
+            false
+        );
+        dispatch(authSuccess({
+            ...response.data,
+            message: response.message
+        }));
+        if (navigate) {
+            navigate('/projects');
+        }
+    } catch (error) {
+        dispatch(
+            authFailure(
+                error.response?.data?.message || "Verification Failed"
+            )
+        );
+    }
+};
+
+export const resendOtpAction = (resendData) => async (dispatch) => {
+    dispatch(authStart());
+    try {
+        const response = await resendOTPAPI(resendData);
+        dispatch(setMessage(response.message || "Verification code resent successfully."));
+    } catch (error) {
+        dispatch(
+            authFailure(
+                error.response?.data?.message || "Failed to resend code"
+            )
+        );
+    }
+};
+
+export const googleLoginAction = (idToken, navigate) => async (dispatch) => {
+    dispatch(authStart());
+    try {
+        const response = await googleSignInAPI({ idToken });
+        saveAuthToStorage(
+            response.data.token,
+            true
+        );
+        dispatch(authSuccess({
+            ...response.data,
+            message: response.message
+        }));
+        if (navigate) {
+            navigate('/projects');
+        }
+    } catch (error) {
+        dispatch(
+            authFailure(
+                error.response?.data?.message || "Google sign-in failed"
+            )
+        );
+    }
+};
+
+export const forgotPasswordAction = (email) => async (dispatch) => {
+    dispatch(authStart());
+    try {
+        const response = await forgotPasswordAPI({ email });
+        dispatch(setMessage(response.message));
+    } catch (error) {
+        dispatch(
+            authFailure(
+                error.response?.data?.message || "Failed to send reset link"
+            )
+        );
+    }
+};
+
+export const resetPasswordAction = (resetData, navigate) => async (dispatch) => {
+    dispatch(authStart());
+    try {
+        const response = await resetPasswordAPI(resetData);
+        dispatch(setMessage(response.message));
+        if (navigate) {
+            setTimeout(() => {
+                navigate('/login');
+            }, 2000);
+        }
+    } catch (error) {
+        dispatch(
+            authFailure(
+                error.response?.data?.message || "Failed to reset password"
             )
         );
     }

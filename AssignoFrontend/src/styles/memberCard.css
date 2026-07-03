@@ -1,3 +1,8 @@
+@keyframes cardFadeIn {
+    0% { opacity: 0; transform: translateY(15px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
 .member-card,
 .task-card {
     display: flex;
@@ -7,8 +12,15 @@
     background-color: var(--glass-bg);
     border: 1px solid var(--glass-border);
     border-radius: 8px;
-    /* box-shadow: var(--box-shadow); */
     cursor: pointer;
+    animation: cardFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.member-card:hover,
+.task-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-soft);
 }
 
 .task-container {

@@ -138,7 +138,34 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
+.project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-primary);
+}
+
+.project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        to right,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+    );
+    transform: skewX(-25deg);
+    transition: 0.75s;
+    pointer-events: none;
+}
+
+.project-card:hover::before {
+    left: 150%;
 }
 
 
@@ -268,12 +295,48 @@
     margin-top: auto;
     padding: 0.5rem 1rem;
     background: var(--text-primary);
-    box-shadow: var(--shadow-primary);
+    box-shadow: var(--shadow-soft);
     border: 1.5px solid var(--border-color);
     color: var(--btn-text);
     border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.history-btn:hover,
+.submission-btn:hover,
+.review-btn:hover,
+.communication-btn:hover,
+.approve-btn:hover,
+.reject-btn:hover,
+.review-detail-btn:hover,
+.review-open-btn:hover,
+.confirm-approve-btn:hover,
+.approve-cancel-btn:hover,
+.confirm-reject-btn:hover,
+.reject-cancel-btn:hover,
+.send-msg-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-primary);
+    opacity: 0.95;
+}
+
+.history-btn:active,
+.submission-btn:active,
+.review-btn:active,
+.communication-btn:active,
+.approve-btn:active,
+.reject-btn:active,
+.review-detail-btn:active,
+.review-open-btn:active,
+.confirm-approve-btn:active,
+.approve-cancel-btn:active,
+.confirm-reject-btn:active,
+.reject-cancel-btn:active,
+.send-msg-btn:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-soft);
 }
 
 .submission-btn,
@@ -350,33 +413,31 @@
 .modal-overlay {
     position: fixed;
     inset: 0;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(4px);
-
-    z-index: 999;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(6px);
+    z-index: 10000;
 }
 
 .project-register-modal {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    width: min(400px, 90vw);
-    max-height: 90vh;
+    gap: 1.25rem;
+    width: min(420px, 90vw);
+    max-height: 85vh;
     overflow-y: auto;
     position: relative;
     padding: 2rem;
-    border-radius: 12px;
-    border: 1px solid var(--text-primary);
-    box-shadow: var(--shadow-primary);
-    background: var(--glass-bg);
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-combined);
+    background: var(--bg-card);
     backdrop-filter: blur(18px);
-
-    z-index: 1000;
+    color: var(--text-primary);
+    box-sizing: border-box;
+    z-index: 10100;
 }
 
 .register-form {

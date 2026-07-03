@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { GiTireIronCross } from "react-icons/gi";
+import { toast } from 'react-toastify';
 const AssignTask = ({ onSubmit, closeModel }) => {
 
    const today = new Date().toISOString().split("T")[0];
@@ -52,7 +53,7 @@ const AssignTask = ({ onSubmit, closeModel }) => {
       );
       
       if (hasInvalidDate) {
-         alert("Deadline cannot be before today.");
+         toast.error("Deadline cannot be before today.");
          return;
       }
 

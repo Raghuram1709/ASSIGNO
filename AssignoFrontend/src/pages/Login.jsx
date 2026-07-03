@@ -5,6 +5,8 @@ import { useAppDispatch, useAppSelector } from '../app/reduxHooks';
 import { loginUser } from '../features/auth/authThunk';
 import { clearError } from '../features/auth/authSlice';
 import { toast } from 'react-toastify';
+import GoogleSignInButton from '../components/GoogleSignInButton';
+import Loader from '../components/Loader';
 import '../styles/auth.css';
 const Login = () => {
 
@@ -49,6 +51,7 @@ const Login = () => {
     return (
 
         <div className="auth-page">
+            {loading && <Loader variant="orbit" fullscreen={true} />}
 
             <div className="auth-container">
 
@@ -140,6 +143,12 @@ const Login = () => {
                     </button>
 
                 </form>
+
+                <div className="auth-divider">
+                    <span>or</span>
+                </div>
+
+                <GoogleSignInButton />
 
                 <p className="auth-footer">
 

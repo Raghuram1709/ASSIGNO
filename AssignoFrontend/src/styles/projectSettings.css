@@ -95,9 +95,9 @@
 .settings-content-card h2 {
   font-size: 1.8rem;
   margin-bottom: 2rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--border-color);
   padding-bottom: 1rem;
-  color: white;
+  color: var(--text-primary);
   font-weight: 700;
 }
 
@@ -126,21 +126,21 @@
 .settings-form-group select {
   padding: 1rem 1.2rem;
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(0, 0, 0, 0.2);
-  color: white;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-primary);
   font-size: 1.05rem;
   transition: all 0.3s ease;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .settings-form-group input:focus,
 .settings-form-group textarea:focus,
 .settings-form-group select:focus {
   outline: none;
-  border-color: #6366f1;
-  background: rgba(0, 0, 0, 0.3);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2), inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-color: var(--accent-primary);
+  background: var(--bg-card);
+  box-shadow: 0 0 0 3px rgba(13, 91, 66, 0.2), inset 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .settings-form-group input:disabled,
@@ -190,14 +190,14 @@
 }
 
 .settings-btn-secondary {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: white;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
 }
 
 .settings-btn-secondary:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: var(--bg-card);
+  border-color: var(--border-color);
 }
 
 .settings-btn-danger {
@@ -280,7 +280,7 @@
   margin: 0;
   font-size: 1.2rem;
   font-weight: 700;
-  color: white;
+  color: var(--text-primary);
 }
 
 .member-item-info p {
@@ -308,7 +308,7 @@
 }
 
 .member-item-meta strong {
-  color: white;
+  color: var(--text-primary);
   font-weight: 600;
 }
 

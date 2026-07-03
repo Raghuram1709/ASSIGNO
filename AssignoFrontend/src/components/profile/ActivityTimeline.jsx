@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { UserPlus, CheckCircle, Edit3, Image as ImageIcon, Lock, Shield, FolderGit2, Clock } from 'lucide-react';
 import '../../styles/profile.css';
 
 const ActivityTimeline = ({ activities }) => {
+  const [expanded, setExpanded] = useState(false);
   
   const defaultActivities = [
     {
@@ -69,6 +70,8 @@ const ActivityTimeline = ({ activities }) => {
     icon: getIconForType(act.type)
   })) : defaultActivities;
 
+  const displayedActivities = expanded ? data : data.slice(0, 5);
+
   return (
     <div className="profile-glass-card">
       <div className="profile-section-header" style={{ borderBottom: 'none', paddingBottom: 0 }}>
@@ -76,7 +79,7 @@ const ActivityTimeline = ({ activities }) => {
       </div>
       
       <div className="timeline-container" style={{ marginTop: '1.5rem' }}>
-        {data.map((activity) => (
+        {displayedActivities.map((activity) => (
           <div key={activity.id} className="timeline-item">
             <div className="timeline-icon-wrapper">
               {activity.icon}
@@ -91,6 +94,18 @@ const ActivityTimeline = ({ activities }) => {
           </div>
         ))}
       </div>
+
+      {data.length > 5 && (
+        <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
+          <button 
+            onClick={() => setExpanded(!expanded)} 
+            className="profile-btn profile-btn-secondary"
+            style={{ padding: '0.4rem 1.2rem', fontSize: '0.85rem' }}
+          >
+            {expanded ? "Show Less" : "View All Activities"}
+          </button>
+        </div>
+      )}
     </div>
   );
 };

@@ -9,6 +9,7 @@ from '../features/project/projectThunk';
 import { toast } from 'react-toastify';
 
 import { MdClose } from "react-icons/md";
+import Loader from './Loader';
 
 const RegisterProject = ({ closeModal }) => {
 
@@ -62,6 +63,7 @@ const RegisterProject = ({ closeModal }) => {
          className="modal-overlay"
          onClick={closeModal}
       >
+         {loading && <Loader variant="orbit" fullscreen={true} />}
          <div
             className="project-register-modal"
             onClick={(e) => e.stopPropagation()}

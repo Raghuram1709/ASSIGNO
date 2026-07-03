@@ -96,7 +96,7 @@ const Projects = () => {
          )}
 
          {loading && projects.length === 0 ? (
-            <Loader variant="orbit" size="large" />
+            <Loader variant="liquid" size="large" />
          ) : (
             <>
                {leadProjects.length > 0 && (

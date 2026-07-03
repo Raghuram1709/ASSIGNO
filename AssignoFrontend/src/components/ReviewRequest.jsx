@@ -19,7 +19,7 @@ const ReviewRequests = ({
   }
 
   return (
-    <div className="review-container">
+    <div className="review-container animated-list">
 
       <h3>
         Pending Reviews

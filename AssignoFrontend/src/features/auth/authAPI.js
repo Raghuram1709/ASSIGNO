@@ -81,3 +81,33 @@ export const deleteAccountAPI = async (token, password) => {
     });
     return response.data;
 };
+
+export const verifyOTPAPI = async (verificationData) => {
+    const response = await axiosInstance.post("auth/verify-otp", verificationData);
+    return response.data;
+};
+
+export const resendOTPAPI = async (resendData) => {
+    const response = await axiosInstance.post("auth/resend-otp", resendData);
+    return response.data;
+};
+
+export const googleSignInAPI = async (googleData) => {
+    const response = await axiosInstance.post("auth/google", googleData);
+    return response.data;
+};
+
+export const forgotPasswordAPI = async (forgotData) => {
+    const response = await axiosInstance.post("auth/forgot-password", forgotData);
+    return response.data;
+};
+
+export const validateResetTokenAPI = async (token) => {
+    const response = await axiosInstance.get(`auth/reset-password/${token}`);
+    return response.data;
+};
+
+export const resetPasswordAPI = async (resetData) => {
+    const response = await axiosInstance.post("auth/reset-password", resetData);
+    return response.data;
+};
