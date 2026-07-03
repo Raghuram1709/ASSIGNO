@@ -68,10 +68,10 @@ const AppNavBar = () => {
     return () => clearInterval(interval);
   }, [dispatch, token]);
 
-  const navbarClass = "navbar scrolled";
+  
 
   return (
-    <nav className={navbarClass}>
+    <nav className="navbar">
       <div className="navbar-container">
         <div className="navbar-left">
           <Link
