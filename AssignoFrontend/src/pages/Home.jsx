@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../app/reduxHooks';
 import dashboardPreview from '../assets/dashboard-preview.png';
@@ -133,6 +133,7 @@ const LiveSubmissionsFeed = () => {
 const Home = () => {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
   const dashboardRef = useRef(null);
+  const mockDashboardRef = useRef(null);
 
   const handleRoleCardMove = (e) => {
     const card = e.currentTarget;
@@ -173,11 +174,8 @@ const Home = () => {
       return setTimeout(() => el.classList.add('visible'), 100);
     });
 
-    // 3. Mouse Parallax Tilt on Hero Dashboard Demo
+    // 3. Mouse Parallax Tilt on Hero and Showcase Dashboard Demo
     const handleMouseMove = (e) => {
-      const dashboard = dashboardRef.current;
-      if (!dashboard) return;
-      
       // Calculate mouse position relative to the center of the screen
       const cx = window.innerWidth / 2;
       const cy = window.innerHeight / 2;
@@ -190,8 +188,15 @@ const Home = () => {
       const rotateX = -dy * 4;
       const rotateY = dx * 4;
       
-      dashboard.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-      // Ambient Background Shift is now handled by scroll
+      const dashboard = dashboardRef.current;
+      if (dashboard) {
+        dashboard.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      }
+
+      const mockDashboard = mockDashboardRef.current;
+      if (mockDashboard) {
+        mockDashboard.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      }
     };
 
     const handleScroll = () => {
@@ -399,7 +404,7 @@ const Home = () => {
               </div>
             </div>
             <div className="reveal reveal-delay-2">
-              <div className="mock-dashboard">
+              <div className="mock-dashboard" ref={mockDashboardRef}>
                 <div className="mock-bar">
                   <div className="mock-bar-dot" style={{ backgroundColor: '#ff5f57' }}></div>
                   <div className="mock-bar-dot" style={{ backgroundColor: '#ffbd2e' }}></div>
