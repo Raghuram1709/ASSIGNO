@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../app/reduxHooks';
 import { toggleTheme } from '../features/theme/themeSlice';
@@ -9,13 +9,27 @@ import '../styles/navbar.css';
 const LandingNavBar = () => {
   const dispatch = useAppDispatch();
   const { mode } = useAppSelector((state) => state.theme);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleThemeToggle = () => {
     dispatch(toggleTheme());
   };
 
   return (
-    <nav className="scrolled">
+    <nav className={isScrolled ? "scrolled" : ""}>
       <div className="nav-inner">
         <div className="nav-logo">
           <a href="#hero">ASSIGN<span>O</span></a>

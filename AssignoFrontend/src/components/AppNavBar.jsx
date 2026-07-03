@@ -14,6 +14,7 @@ import "../styles/navbar.css";
 const AppNavBar = () => {
   const [isOpen, setOpen] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -26,6 +27,19 @@ const AppNavBar = () => {
   const { mode } = useAppSelector(
     (state) => state.theme
   );
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Close every popup/menu
   const closeAll = () => {
@@ -71,7 +85,7 @@ const AppNavBar = () => {
   
 
   return (
-    <nav className="navbar">
+    <nav className={`navbar ${isScrolled ? "scrolled" : ""}`}>
       <div className="navbar-container">
         <div className="navbar-left">
           <Link
