@@ -23,16 +23,27 @@ const SignUp = () => {
         );
 
     const handleSignup = async (e) => {
-
         e.preventDefault();
 
-        dispatch(signupUser({
-            name,
-            email,
-            password
-        }, navigate))
+        // Field validation
+        if (!name.trim() || !email.trim() || !password.trim()) {
+            toast.error("Username, Email, and Password are required.");
+            return;
+        }
 
-    }
+        // Email format validation (so no API call/fetch happens with invalid formats)
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email.trim())) {
+            toast.error("Please enter a valid email address.");
+            return;
+        }
+
+        dispatch(signupUser({
+            name: name.trim(),
+            email: email.trim(),
+            password
+        }, navigate));
+    };
 
     const handleNavigate = () => {
         navigate('/login');
@@ -88,6 +99,7 @@ const SignUp = () => {
                             onChange={(e) =>
                                 setName(e.target.value)
                             }
+                            required
                         />
 
                     </div>
@@ -107,6 +119,16 @@ const SignUp = () => {
                             onChange={(e) =>
                                 setEmail(e.target.value)
                             }
+                            onBlur={(e) => {
+                                const val = e.target.value.trim();
+                                if (val) {
+                                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                                    if (!emailRegex.test(val)) {
+                                        toast.error("Please enter a valid email address.");
+                                    }
+                                }
+                            }}
+                            required
                         />
 
                     </div>
@@ -122,6 +144,7 @@ const SignUp = () => {
                             onChange={(e) =>
                                 setPassword(e.target.value)
                             }
+                            required={true}
                         />
 
                     </div>

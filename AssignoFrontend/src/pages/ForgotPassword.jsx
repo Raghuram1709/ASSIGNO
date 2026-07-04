@@ -29,11 +29,16 @@ const ForgotPassword = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!email) {
+        if (!email.trim()) {
             toast.error("Please enter your email address.");
             return;
         }
-        dispatch(forgotPasswordAction(email));
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email.trim())) {
+            toast.error("Please enter a valid email address.");
+            return;
+        }
+        dispatch(forgotPasswordAction(email.trim()));
     };
 
     const handleBackToLogin = () => {
@@ -63,6 +68,15 @@ const ForgotPassword = () => {
                                     placeholder="e.g. user@gmail.com"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
+                                    onBlur={(e) => {
+                                        const val = e.target.value.trim();
+                                        if (val) {
+                                            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                                            if (!emailRegex.test(val)) {
+                                                toast.error("Please enter a valid email address.");
+                                            }
+                                        }
+                                    }}
                                     required
                                 />
                             </div>

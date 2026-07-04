@@ -6,7 +6,8 @@ const PasswordInput = ({
     onChange,
     placeholder = "Enter password",
     name = "password",
-    id = "password"
+    id = "password",
+    required = false
 }) => {
 
     const [showPassword, setShowPassword] = useState(false);
@@ -23,6 +24,7 @@ const PasswordInput = ({
                 placeholder={placeholder}
                 name={name}
                 id={id}
+                required={required}
             />
 
             <button

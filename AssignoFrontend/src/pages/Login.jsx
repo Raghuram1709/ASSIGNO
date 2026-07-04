@@ -22,13 +22,26 @@ const Login = () => {
 
 
     const handleLogin = async (e) => {
-
         e.preventDefault();
-        dispatch(loginUser(
-            {email,
+
+        // Field validation
+        if (!email.trim() || !password.trim()) {
+            toast.error("Email and Password are required.");
+            return;
+        }
+
+        // Email format validation (so no API call/fetch happens with invalid formats)
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email.trim())) {
+            toast.error("Please enter a valid email address.");
+            return;
+        }
+
+        dispatch(loginUser({
+            email: email.trim(),
             password,
-            rememberMe}
-        ))
+            rememberMe
+        }));
     };
 
 
@@ -85,6 +98,16 @@ const Login = () => {
                             onChange={(e) =>
                                 setEmail(e.target.value)
                             }
+                            onBlur={(e) => {
+                                const val = e.target.value.trim();
+                                if (val) {
+                                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                                    if (!emailRegex.test(val)) {
+                                        toast.error("Please enter a valid email address.");
+                                    }
+                                }
+                            }}
+                            required
                         />
 
                     </div>
@@ -100,6 +123,7 @@ const Login = () => {
                             onChange={(e) =>
                                 setPassword(e.target.value)
                             }
+                            required={true}
                         />
 
                     </div>
