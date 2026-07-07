@@ -33,7 +33,7 @@ export const signupUser = (userData, navigate) => async (dispatch) => {
         if (response.data && response.data.isVerified === false) {
             dispatch(verificationRequired({
                 email: response.data.email,
-                message: response.message
+                message: "Verification code sent. Please check your email."
             }));
             if (navigate) {
                 navigate('/verify-otp');

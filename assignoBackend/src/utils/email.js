@@ -16,15 +16,28 @@ const getTransporter = async () => {
 
     if (host && port && user && pass) {
       console.log("SMTP Configured using environment variables.");
-      return nodemailer.createTransport({
-        host,
-        port: parseInt(port),
-        secure: parseInt(port) === 465, // true for 465, false for other ports
-        auth: {
-          user,
-          pass,
-        },
-      });
+      const isGmail = host.toLowerCase().includes("gmail");
+      const transportConfig = isGmail
+        ? {
+            service: "gmail",
+            auth: {
+              user,
+              pass,
+            },
+          }
+        : {
+            host,
+            port: parseInt(port),
+            secure: parseInt(port) === 465, // true for 465, false for other ports
+            auth: {
+              user,
+              pass,
+            },
+            tls: {
+              rejectUnauthorized: false
+            }
+          };
+      return nodemailer.createTransport(transportConfig);
     }
 
     console.log("No SMTP environment variables found. Initializing Ethereal Mail...");

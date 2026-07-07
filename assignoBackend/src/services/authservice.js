@@ -91,12 +91,10 @@ const signUp = async ({name, email, password}) => {
 
     await user.save();
 
-    // Send verification email
-    try {
-        await sendVerificationOTP(email, otpCode);
-    } catch (err) {
-        console.error("Failed to send signup OTP email:", err);
-    }
+    // Send verification email (non-blocking)
+    sendVerificationOTP(email, otpCode).catch((err) => {
+        console.error("Failed to send signup OTP email in background:", err);
+    });
 
     return {
         id: user._id,
@@ -224,12 +222,10 @@ const resendOTP = async ({ email }) => {
 
     await user.save();
 
-    // Send email
-    try {
-        await sendVerificationOTP(email, newOtp);
-    } catch (err) {
-        console.error("Failed to resend OTP email:", err);
-    }
+    // Send email (non-blocking)
+    sendVerificationOTP(email, newOtp).catch((err) => {
+        console.error("Failed to resend OTP email in background:", err);
+    });
 
     return { message: "Verification code sent successfully." };
 };
@@ -348,11 +344,10 @@ const forgotPassword = async ({ email }) => {
     const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
     const resetLink = `${clientUrl}/reset-password?token=${resetToken}`;
     
-    try {
-        await sendPasswordResetEmail(user.email, resetLink);
-    } catch (err) {
-        console.error("Failed to send password reset email:", err);
-    }
+    // Send email (non-blocking)
+    sendPasswordResetEmail(user.email, resetLink).catch((err) => {
+        console.error("Failed to send password reset email in background:", err);
+    });
 
     return { message: "If that email address exists in our database, we have sent a password reset link." };
 };

@@ -44,8 +44,9 @@ const VerifyOtp = () => {
     useEffect(() => {
         if (message) {
             toast.success(message);
+            dispatch(clearError());
         }
-    }, [message]);
+    }, [message, dispatch]);
 
     const handleChange = (index, value) => {
         if (isNaN(value)) return; // Allow only numbers
@@ -118,6 +119,7 @@ const VerifyOtp = () => {
                                 ref={(el) => (inputRefs.current[idx] = el)}
                                 type="text"
                                 maxLength="1"
+                                required
                                 className="otp-digit-input"
                                 value={digit}
                                 onChange={(e) => handleChange(idx, e.target.value)}
@@ -126,7 +128,7 @@ const VerifyOtp = () => {
                         ))}
                     </div>
 
-                    <button type="submit" className="auth-btn" disabled={loading}>
+                    <button type="submit" className="auth-btn" disabled={loading || otp.some(digit => digit === '')}>
                         {loading ? "Verifying..." : "Verify Code"}
                     </button>
                 </form>

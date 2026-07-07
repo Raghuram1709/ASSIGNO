@@ -42,6 +42,7 @@ const authSlice = createSlice({
         },
         setMessage: (state, action) => {
             state.message = action.payload;
+            state.loading = false;
         },
         clearError: (state) => {
             state.error = null;
