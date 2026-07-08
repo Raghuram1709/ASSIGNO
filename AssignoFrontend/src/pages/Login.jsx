@@ -172,7 +172,7 @@ const Login = () => {
                     <span>or</span>
                 </div>
 
-                <GoogleSignInButton />
+                <GoogleSignInButton mode="login" />
 
                 <p className="auth-footer">
 

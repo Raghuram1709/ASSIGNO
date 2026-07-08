@@ -79,10 +79,95 @@ const getTransporter = async () => {
  */
 export const sendEmail = async ({ to, subject, html, text }) => {
   try {
-    const transporter = await getTransporter();
     const fromName = process.env.EMAIL_FROM_NAME || "Assigno";
     const fromAddress = process.env.EMAIL_FROM_ADDRESS || "noreply@assigno.com";
     
+    // Check if SendGrid HTTP API key is configured
+    const sendgridApiKey = process.env.SENDGRID_API_KEY;
+    if (sendgridApiKey) {
+      console.log(`[SendGrid] Sending email to ${to} via SendGrid HTTP API...`);
+      const response = await fetch("https://api.sendgrid.com/v3/mail/send", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${sendgridApiKey}`
+        },
+        body: JSON.stringify({
+          personalizations: [
+            {
+              to: [{ email: to }]
+            }
+          ],
+          from: {
+            email: fromAddress,
+            name: fromName
+          },
+          subject,
+          content: [
+            {
+              type: "text/plain",
+              value: text || "Email verification OTP code"
+            },
+            {
+              type: "text/html",
+              value: html
+            }
+          ]
+        })
+      });
+
+      if (!response.ok) {
+        let errorDetails = "";
+        try {
+          const errJson = await response.json();
+          errorDetails = JSON.stringify(errJson);
+        } catch (_) {
+          errorDetails = await response.text();
+        }
+        throw new Error(`SendGrid API error: ${response.status} - ${errorDetails}`);
+      }
+      
+      console.log(`[SendGrid] Email sent successfully to ${to}`);
+      return { messageId: response.headers.get("x-message-id") || "sendgrid-success" };
+    }
+
+    // Check if Resend HTTP API key is configured
+    const resendApiKey = process.env.RESEND_API_KEY;
+    if (resendApiKey) {
+      console.log(`[Resend] Sending email to ${to} via Resend HTTP API...`);
+      const response = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${resendApiKey}`
+        },
+        body: JSON.stringify({
+          from: `"${fromName}" <${fromAddress}>`,
+          to: [to],
+          subject,
+          html,
+          text
+        })
+      });
+
+      if (!response.ok) {
+        let errorDetails = "";
+        try {
+          const errJson = await response.json();
+          errorDetails = JSON.stringify(errJson);
+        } catch (_) {
+          errorDetails = await response.text();
+        }
+        throw new Error(`Resend API error: ${response.status} - ${errorDetails}`);
+      }
+
+      const data = await response.json();
+      console.log(`[Resend] Email sent successfully to ${to}. Message ID: ${data.id}`);
+      return { messageId: data.id || "resend-success" };
+    }
+
+    // Fallback to traditional SMTP / Nodemailer
+    const transporter = await getTransporter();
     const mailOptions = {
       from: `"${fromName}" <${fromAddress}>`,
       to,

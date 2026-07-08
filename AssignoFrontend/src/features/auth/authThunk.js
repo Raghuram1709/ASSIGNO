@@ -123,10 +123,10 @@ export const resendOtpAction = (resendData) => async (dispatch) => {
     }
 };
 
-export const googleLoginAction = (idToken, navigate) => async (dispatch) => {
+export const googleLoginAction = (idToken, navigate, mode) => async (dispatch) => {
     dispatch(authStart());
     try {
-        const response = await googleSignInAPI({ idToken });
+        const response = await googleSignInAPI({ idToken, mode });
         saveAuthToStorage(
             response.data.token,
             true

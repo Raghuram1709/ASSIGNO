@@ -230,7 +230,7 @@ const resendOTP = async ({ email }) => {
     return { message: "Verification code sent successfully." };
 };
 
-const googleSignIn = async ({ idToken }) => {
+const googleSignIn = async ({ idToken, mode }) => {
     if (!idToken) {
         throw new AppError("Google ID token is required.", 400);
     }
@@ -255,6 +255,9 @@ const googleSignIn = async ({ idToken }) => {
     let user = await User.findOne({ email });
 
     if (user) {
+        if (mode === 'signup') {
+            throw new AppError("An account with this email already exists. Please log in instead.", 409);
+        }
         // Link Google provider info if not already linked
         let modified = false;
         if (user.authProvider !== 'google') {

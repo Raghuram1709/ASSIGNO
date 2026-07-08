@@ -162,7 +162,7 @@ const SignUp = () => {
                     <span>or</span>
                 </div>
 
-                <GoogleSignInButton />
+                <GoogleSignInButton mode="signup" />
 
                 <p className="auth-footer">
 

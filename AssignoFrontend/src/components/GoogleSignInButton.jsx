@@ -3,7 +3,7 @@ import { useAppDispatch } from '../app/reduxHooks';
 import { googleLoginAction } from '../features/auth/authThunk';
 import { useNavigate } from 'react-router-dom';
 
-const GoogleSignInButton = () => {
+const GoogleSignInButton = ({ mode = 'login' }) => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
@@ -11,7 +11,7 @@ const GoogleSignInButton = () => {
         // Callback function when Google authentication returns credential
         const handleCredentialResponse = (response) => {
             if (response.credential) {
-                dispatch(googleLoginAction(response.credential, navigate));
+                dispatch(googleLoginAction(response.credential, navigate, mode));
             }
         };
 
@@ -51,7 +51,7 @@ const GoogleSignInButton = () => {
             }, 100);
             return () => clearInterval(interval);
         }
-    }, [dispatch, navigate]);
+    }, [dispatch, navigate, mode]);
 
     return (
         <div className="google-signin-container" style={{ position: 'relative', width: '100%', height: '48px', overflow: 'hidden', borderRadius: '14px', marginTop: '1rem', display: 'flex', justifyContent: 'center' }}>
