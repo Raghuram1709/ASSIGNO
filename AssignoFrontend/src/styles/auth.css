@@ -249,17 +249,19 @@ body {
   background:
     linear-gradient(120deg,
       transparent,
-      rgba(255, 255, 255, 0.25),
+      var(--shimmer-color),
       transparent);
 
   transition: all 0.7s ease;
 }
 
-.auth-btn:hover::before {
+.auth-btn:hover::before,
+.google-signin-container:hover .auth-btn::before {
   left: 120%;
 }
 
-.auth-btn:hover {
+.auth-btn:hover,
+.google-signin-container:hover .auth-btn {
   transform: translateY(-2px);
   box-shadow:
     0 15px 30px rgba(0, 49, 31, 0.25);

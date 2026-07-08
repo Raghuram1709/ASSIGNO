@@ -41,7 +41,7 @@ const Login = () => {
             email: email.trim(),
             password,
             rememberMe
-        }));
+        }, navigate));
     };
 
 

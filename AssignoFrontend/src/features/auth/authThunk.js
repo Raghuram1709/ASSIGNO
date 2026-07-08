@@ -36,7 +36,7 @@ export const signupUser = (userData, navigate) => async (dispatch) => {
                 message: "Verification code sent. Please check your email."
             }));
             if (navigate) {
-                navigate('/verify-otp');
+                navigate(`/verify-otp?email=${encodeURIComponent(response.data.email)}`);
             }
         } else {
             dispatch(authSuccess({
@@ -53,7 +53,7 @@ export const signupUser = (userData, navigate) => async (dispatch) => {
     }
 };
 
-export const loginUser = (userData) => async (dispatch) => {
+export const loginUser = (userData, navigate) => async (dispatch) => {
     dispatch(authStart());
 
     try {
@@ -76,6 +76,9 @@ export const loginUser = (userData) => async (dispatch) => {
                 email: userData.email,
                 message: error.response.data.message
             }));
+            if (navigate) {
+                navigate(`/verify-otp?email=${encodeURIComponent(userData.email)}`);
+            }
         }
         dispatch(
             authFailure(

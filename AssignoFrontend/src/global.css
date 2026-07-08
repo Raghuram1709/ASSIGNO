@@ -85,6 +85,9 @@ body,
   --accent-secondary: var(--rust);
   --accent-tertiary: var(--copper);
 
+  /* SHIMMER EFFECT */
+  --shimmer-color: rgba(255, 255, 255, 0.28);
+
   /* GRADIENTS */
   --gradient-primary:
     linear-gradient(135deg,
@@ -186,6 +189,9 @@ body,
   --accent-primary: #0D5B42;
   --accent-secondary: var(--rust);
   --accent-tertiary: var(--copper);
+
+  /* SHIMMER EFFECT */
+  --shimmer-color: rgba(236, 229, 231, 0.16);
 
   /* GRADIENTS */
   --gradient-primary:

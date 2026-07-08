@@ -108,6 +108,9 @@ const VerifyOtp = () => {
                 <p className="auth-subtitle">
                     We've sent a 6-digit verification code to <span style={{ color: 'var(--accent-secondary)', fontWeight: 600 }}>{email}</span>.
                 </p>
+                <p className="auth-subtitle" style={{ fontSize: '0.85rem', marginTop: '-0.5rem', marginBottom: '1.5rem', color: 'var(--text-muted)' }}>
+                    (If you don't see it, please check your <strong>spam or junk</strong> folder.)
+                </p>
 
                 {error && <div className="auth-error-banner">{error}</div>}
 
